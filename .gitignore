@@ -1,0 +1,22 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/dotnetcore
+# Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore
+
+### DotnetCore ###
+# .NET Core build folders
+**/bin/
+**/obj/
+
+# Common node modules locations
+**/node_modules
+**/wwwroot/node_modules
+
+*.log
+**/dbsetup.txt
+**/appsetting.json
+**/JSONDB.json
+.vs/
+
+# End of https://www.toptal.com/developers/gitignore/api/dotnetcore
+SAWebUI/appsettings.Development.json
+SAWebUI/appsettings.json
