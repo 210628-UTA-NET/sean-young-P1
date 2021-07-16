@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Customer {
+    public class Customer : StoreModel {
 
         private string _Name;
         private MailAddress _EmailAddress;

@@ -29,11 +29,11 @@ namespace SAModels {
         public Country Country { get; set; }
 
         [MaxLength(10)]
-        [RegularExpression("^[0-9]*$")]
+        [RegularExpression(@"^\\d+$")]
         public string ZipCode {
             get { return _ZipCode; }
             set {
-                if ((value.Length != 5) || Regex.IsMatch(value, "^[0-9]*$"))
+                if ((value.Length != 5) || Regex.IsMatch(value, @"^\\d+$"))
                     throw new FormatException("A zip code must be 5 digits. Example: '94506'");
 
                 _ZipCode = value;
