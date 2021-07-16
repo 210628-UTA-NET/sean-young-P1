@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +20,7 @@ namespace SADL {
             _context.SaveChanges();
         }
 
-        public void Delete(T p_model, string p_idName) {
+        public void Delete(T p_model) {
             /*
             var modelID = p_model.GetType().GetProperty(p_idName).GetValue(p_model);
 
@@ -38,23 +40,20 @@ namespace SADL {
             throw new NotImplementedException();
         }
 
-        public void Update(T p_model, string p_idName) {
-            /*
-            var modelID = p_model.GetType().GetProperty(p_idName).GetValue(p_model);
-
-            // Get Item with matching id. Id may not be named "Id"
-            T foundModel = _context.Set<T>().Single(e =>
-                e.GetType().GetProperty(p_idName).GetValue(e) == modelID);
-
-            // Copy over values and save
-            p_model.Transfer(p_model);
-            _context.SaveChanges();
-            */
-
+        public void Update(T p_model) {
             _context.Set<T>().Attach(p_model);
-            _context.Set<T>().Update(p_model);
-            _context.SaveChanges();
 
+            var entry = _context.Entry(p_model);
+            entry.State = EntityState.Modified;
+
+            foreach(var prop in entry.Properties.Where(p => !p.Metadata.IsKey()) ) {
+                if (prop.CurrentValue == null) {
+                    prop.IsModified = false;
+                }
+            }
+
+            _context.SaveChanges();
+            entry.State = EntityState.Detached;
         }
     }
 }
