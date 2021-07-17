@@ -2,16 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using SADL;
 using SAModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace SADL.Tests {
-    public class CustomerTests {
+    public class DLCustomerTests {
 
         private readonly DbContextOptions<SADBContext> _options;
 
-        public CustomerTests() {
+        public DLCustomerTests() {
             _options = new DbContextOptionsBuilder<SADBContext>()
+                .UseLazyLoadingProxies()
                 .UseSqlite("Filename = test.db").Options;
             Seed();
         }
@@ -61,7 +63,8 @@ namespace SADL.Tests {
 
         [Fact]
         public void CreateCustomer() {
-            using var context = new SADBContext(_options); ICRUD<Customer> db = new StoreModelDB<Customer>(context);
+            using var context = new SADBContext(_options); 
+            ICRUD<Customer> db = new StoreModelDB<Customer>(context);
 
             Customer newCustomer = new() {
                 Name = "Sum Gai",
@@ -86,7 +89,8 @@ namespace SADL.Tests {
 
         [Fact]
         public void DeleteCustomer() {
-            using var context = new SADBContext(_options); ICRUD<Customer> db = new StoreModelDB<Customer>(context);
+            using var context = new SADBContext(_options); 
+            ICRUD<Customer> db = new StoreModelDB<Customer>(context);
 
             db.Delete(new Customer() { Id = 1 });
 
@@ -99,19 +103,44 @@ namespace SADL.Tests {
 
         [Fact]
         public void UpdateCustomer() {
-            using var context = new SADBContext(_options); ICRUD<Customer> db = new StoreModelDB<Customer>(context);
+            using var context = new SADBContext(_options); 
+            
+            ICRUD<Customer> db = new StoreModelDB<Customer>(context);
 
             db.Update(new Customer() { Id = 1, Name ="Bob Robertson" });
 
             Customer found = context.Customers
-                .Include(c => c.Address)
-                .Include(c => c.Address.Country)
-                .Include(c => c.Address.State)
                 .First(c => c.Id == 1);
 
             Assert.Equal("Bob Robertson", found.Name);
             Assert.Equal("123 Street Way", found.Address.StreetAddress);
             Assert.Equal("syoung908@gmail.com", found.Email);
+        }
+
+        [Fact]
+        public void UpdateCustomerAddress() {
+            using var context = new SADBContext(_options); 
+            ICRUD<Customer> customerDB = new StoreModelDB<Customer>(context);
+            ICRUD<Address> addressDB = new StoreModelDB<Address>(context);
+
+            addressDB.Update(new Address() { Id = 1, StreetAddress = "Changed" });
+
+            Customer found = context.Customers.First(c => c.Id == 1);
+
+            Assert.Equal("Sean Young", found.Name);
+            Assert.Equal("Changed", found.Address.StreetAddress);
+            Assert.Equal("syoung908@gmail.com", found.Email);
+        }
+
+        [Fact]
+        public void QueryAllCustomers() {
+            using var context = new SADBContext(_options);
+            ICRUD<Customer> customerDB = new StoreModelDB<Customer>(context);
+
+            IList<Customer> results = customerDB.Query(null, null);
+
+            Assert.NotNull(results);
+            Assert.Equal(2, results.Count);
         }
     }
 }

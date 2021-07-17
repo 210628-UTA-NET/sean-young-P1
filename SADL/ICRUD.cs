@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SADL {
     public interface ICRUD<T> where T : SAModels.StoreModel {
-        public void Create(T p_model);
-        public IQueryable Query(T p_model);
-        public void Update(T p_model);
-        public void Delete(T p_model);
+        void Create(T p_model);
+        IList<T> Query(IList<Func<T, bool>> p_conditions, IList<string> p_includes);
+        void Update(T p_model);
+        void Delete(T p_model);
     }
 }

@@ -14,7 +14,7 @@ namespace SAModels {
         public int Id { get; set; }
 
         [Required]
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]

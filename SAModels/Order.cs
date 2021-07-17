@@ -15,10 +15,10 @@ namespace SAModels {
         public int Id { get; set; }
 
         [Required]
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         [Required]
-        public Storefront Storefront { get; set; }
+        public virtual Storefront Storefront { get; set; }
 
         [Required]
         [Column(TypeName = "money")]

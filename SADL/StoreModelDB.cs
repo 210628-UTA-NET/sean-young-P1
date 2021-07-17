@@ -13,6 +13,7 @@ namespace SADL {
 
         public StoreModelDB(SADBContext p_context) {
             _context = p_context;
+            //_context.ChangeTracker.LazyLoadingEnabled = false;
         }
 
         public void Create(T p_model) {
@@ -21,23 +22,30 @@ namespace SADL {
         }
 
         public void Delete(T p_model) {
-            /*
-            var modelID = p_model.GetType().GetProperty(p_idName).GetValue(p_model);
-
-            // Get Item with matching id. Id may not be named "Id"
-            T foundModel = _context.Set<T>().Single(e =>
-                e.GetType().GetProperty(p_idName).GetValue(e) == modelID);
-            */
-
-            // Remove and save
             _context.Set<T>().Attach(p_model);
             _context.Set<T>().Remove(p_model);
             _context.SaveChanges();
 
         }
 
-        public IQueryable Query(T p_model) {
-            throw new NotImplementedException();
+        public IList<T> Query(IList<Func<T, bool>> p_conditions, IList<string> p_includes) {
+            var enumerableQuery = _context.Set<T>().AsEnumerable();
+
+            if (p_conditions != null) {
+                foreach (Func<T, bool> cond in p_conditions) {
+                    enumerableQuery = enumerableQuery.Where(cond);
+                }
+            }
+
+            var queryableQuery = enumerableQuery.AsQueryable();
+
+            if (p_includes != null) {
+                foreach (string inc in p_includes) {
+                    queryableQuery = queryableQuery.Include(inc);
+                }
+            }
+
+            return queryableQuery.Select(o => o).ToList();
         }
 
         public void Update(T p_model) {
@@ -49,7 +57,7 @@ namespace SADL {
             foreach(var prop in entry.Properties.Where(p => !p.Metadata.IsKey()) ) {
                 if (prop.CurrentValue == null) {
                     prop.IsModified = false;
-                }
+                } 
             }
 
             _context.SaveChanges();

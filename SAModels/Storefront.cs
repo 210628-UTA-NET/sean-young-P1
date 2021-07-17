@@ -16,8 +16,8 @@ namespace SAModels {
         public string Name { get; set; }
 
         [Required]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
-        public ICollection<LineItem> Items { get; set; }
+        public virtual ICollection<LineItem> Items { get; set; }
     }
 }

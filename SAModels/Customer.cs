@@ -31,7 +31,7 @@ namespace SAModels {
         }
 
         [Required]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
         [Required]
         [MaxLength(320)]

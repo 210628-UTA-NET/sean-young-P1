@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Address {
+    public class Address : StoreModel {
 
         private string _ZipCode;
 
@@ -23,10 +23,10 @@ namespace SAModels {
         public string City { get; set; }
 
         [Required]
-        public State State { get; set; }
+        public virtual State State { get; set; }
 
         [Required]
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
         [MaxLength(10)]
         [RegularExpression(@"^\\d+$")]
