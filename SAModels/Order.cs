@@ -14,7 +14,7 @@ namespace SAModels {
         public int Id { get; set; }
 
         [Required]
-        public virtual Customer Customer { get; set; }
+        public virtual CustomerUser CustomerUser { get; set; }
 
         [Required]
         public virtual Storefront Storefront { get; set; }

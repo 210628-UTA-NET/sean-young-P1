@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAModels.Tests", "SAModels.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SADL.Tests", "SADL.Tests\SADL.Tests.csproj", "{854A0D38-130E-4361-B5E2-2BC6CA39DD4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAWebUI", "SAWebUI\SAWebUI.csproj", "{FD397664-396F-4C16-9BE3-CDE5F2C220D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAWebUI", "SAWebUI\SAWebUI.csproj", "{FD397664-396F-4C16-9BE3-CDE5F2C220D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

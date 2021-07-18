@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SAWebUI.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +22,6 @@ namespace SAWebUI {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("AzureDB")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddAuthentication()
@@ -37,8 +33,8 @@ namespace SAWebUI {
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<CustomerUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<SADL.SADBContext>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
