@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SAModels {
     public class Address : StoreModel {
-
         private string _ZipCode;
 
         [Key]

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SAModels {
     public class Customer : StoreModel {
-
         private string _Name;
         private MailAddress _EmailAddress;
         private string _Phone;

@@ -16,6 +16,7 @@ namespace SADL {
         public DbSet<LineItem> LineItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Storefront> Storefronts { get; set; }
         public SADBContext(): base() { }

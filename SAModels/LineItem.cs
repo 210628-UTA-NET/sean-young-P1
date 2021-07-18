@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SAModels {
     public class LineItem {
-
         private int _Quantity;
 
         [Key]

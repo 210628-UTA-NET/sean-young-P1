@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SADL;
 
 namespace SADL.Migrations
 {
     [DbContext(typeof(SADBContext))]
-    partial class SADBContextModelSnapshot : ModelSnapshot
+    [Migration("20210717213507_ShoppingCart")]
+    partial class ShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,9 +153,6 @@ namespace SADL.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("StorefrontId")
                         .HasColumnType("int");
 
@@ -162,8 +161,6 @@ namespace SADL.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("StorefrontId");
 
@@ -220,31 +217,6 @@ namespace SADL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("SAModels.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StorefrontId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("money");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("StorefrontId");
-
-                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("SAModels.State", b =>
@@ -334,10 +306,6 @@ namespace SADL.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId");
 
-                    b.HasOne("SAModels.ShoppingCart", null)
-                        .WithMany("Items")
-                        .HasForeignKey("ShoppingCartId");
-
                     b.HasOne("SAModels.Storefront", null)
                         .WithMany("Items")
                         .HasForeignKey("StorefrontId");
@@ -346,21 +314,6 @@ namespace SADL.Migrations
                 });
 
             modelBuilder.Entity("SAModels.Order", b =>
-                {
-                    b.HasOne("SAModels.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("SAModels.Storefront", "Storefront")
-                        .WithMany()
-                        .HasForeignKey("StorefrontId");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Storefront");
-                });
-
-            modelBuilder.Entity("SAModels.ShoppingCart", b =>
                 {
                     b.HasOne("SAModels.Customer", "Customer")
                         .WithMany()
@@ -387,11 +340,6 @@ namespace SADL.Migrations
             modelBuilder.Entity("SAModels.Order", b =>
                 {
                     b.Navigation("LineItems");
-                });
-
-            modelBuilder.Entity("SAModels.ShoppingCart", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("SAModels.Storefront", b =>

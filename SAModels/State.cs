@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SAModels {
     public class State {
-
         [Key]
         [Required]
         [MaxLength(2)]

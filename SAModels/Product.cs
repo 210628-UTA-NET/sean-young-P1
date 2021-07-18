@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SAModels {
     public class Product {
-
         private decimal _Price;
 
         [Key]
