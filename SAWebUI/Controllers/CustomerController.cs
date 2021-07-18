@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SAWebUI.Models;
 using System;
@@ -15,6 +16,7 @@ namespace SAWebUI.Controllers {
             _logger = logger;
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult Index() {
             return View();
         }

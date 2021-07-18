@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SAModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,18 @@ namespace SAWebUI {
                 });
 
             services.AddDefaultIdentity<CustomerUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SADL.SADBContext>();
+            /*
+            services.AddAuthorization(options => {
+                options.AddPolicy("Manager",
+                     policy => policy.RequireRole("Manager"));
+            });
+            
+            services.AddIdentity<CustomerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                 .AddDefaultUI()
+                 .AddEntityFrameworkStores<SADL.SADBContext>()
+                 .AddDefaultTokenProviders();*/
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));

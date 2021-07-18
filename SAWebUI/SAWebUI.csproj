@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\DbInitializer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\DbInitializer.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
@@ -25,6 +33,10 @@
     <ProjectReference Include="..\SABL\SABL.csproj" />
     <ProjectReference Include="..\SADL\SADL.csproj" />
     <ProjectReference Include="..\SAModels\SAModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
   <ItemGroup>
