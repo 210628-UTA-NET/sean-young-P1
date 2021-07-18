@@ -14,10 +14,10 @@ namespace SAWebUI.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<CustomerUser> _userManager;
+        private readonly SignInManager<CustomerUser> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<CustomerUser> userManager, SignInManager<CustomerUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
