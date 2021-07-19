@@ -32,5 +32,9 @@ namespace SAModels {
         public string Description { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
+
+        public override int GetID() {
+            return Id;
+        }
     }
 }

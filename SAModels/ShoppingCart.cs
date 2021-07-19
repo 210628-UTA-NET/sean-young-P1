@@ -29,5 +29,9 @@ namespace SAModels {
         public virtual Storefront Storefront { get; set; }
 
         public virtual ICollection<LineItem> Items { get; set; }
+
+        public override int GetID() {
+            return Id;
+        }
     }
 }

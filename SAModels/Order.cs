@@ -33,5 +33,9 @@ namespace SAModels {
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DatePlaced { get; set; }
+
+        public override int GetID() {
+            return Id;
+        }
     }
 }

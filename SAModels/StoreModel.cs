@@ -16,5 +16,7 @@ namespace SAModels {
                 throw new ArgumentException("StoreModel must be the same type.");
             }
         }
+
+        public abstract int GetID();
     }
 }

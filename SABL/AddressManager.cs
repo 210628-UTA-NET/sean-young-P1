@@ -17,5 +17,13 @@ namespace SABL {
             IList<Address> results =_db.Query(conditions, includes);
             return new Address();
         }
+
+        public int Insert(Address p_address) {
+            return _db.Create(p_address);
+        }
+
+        public int Update(Address p_address) {
+            return _db.Update(p_address);
+        }
     }
 }

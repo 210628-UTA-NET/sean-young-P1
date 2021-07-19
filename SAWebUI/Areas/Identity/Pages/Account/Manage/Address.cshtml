@@ -24,16 +24,16 @@
             <div class=" container space-between row" style="padding: 0; margin: 0px">
                 <div class="form-group" style="width: 50%; padding-left: 0">
                     <label asp-for="Input.State"></label>
-                    <select class="form-select" aria-label="state-select">
+                    <select class="form-select" asp-for="Input.State" aria-label="state-select">
                         @if (Model.Address.State.Code == "00") {
-                            <option selected>Select a state</option>
+                            <option value="00" selected>Select a state</option>
                         }
                         @foreach (var state in Model.States) {
                             @if (state.Code == "00") continue;
                             else if (state.Code == Model.Address.State.Code) {
                                 <option selected> @state.Code</option>
                             } else {
-                                <option> @state.Code</option>
+                                <option value="@state.Code"> @state.Code</option>
                                 }
                             }
                     </select>

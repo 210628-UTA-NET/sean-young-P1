@@ -100,7 +100,7 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostChangeEmailAsync() {
+        public async Task<IActionResult> OnPostAsync() {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -111,56 +111,52 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
                 return Page();
             }
 
-            var email = await _userManager.GetEmailAsync(user);
-            /*
-            if (Input.NewEmail != email) {
-                var userId = await _userManager.GetUserIdAsync(user);
-                var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmailChange",
-                    pageHandler: null,
-                    values: new { userId = userId, email = Input.NewEmail, code = code },
-                    protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            var addressUser = await _userManager.Users
+                .Include(u => u.Address)
+                .ThenInclude(a => a.State)
+                .SingleAsync(u => u.Id == user.Id);
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
-                return RedirectToPage();
-            }*/
+            Address = addressUser.Address;
+            States = _stateManager.GetAllStates();
 
-            StatusMessage = "Your email is unchanged.";
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostSendVerificationEmailAsync() {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            if (Address == null) {
+                Address = new Address() {
+                    State = States.First(s => s.Code == "00")
+                };
             }
 
-            if (!ModelState.IsValid) {
-                await LoadAsync(user);
-                return Page();
+            bool shouldUpdate = false;
+
+            if (Input.StreetAddress != Address.StreetAddress) {
+                Address.StreetAddress = Input.StreetAddress;
+                shouldUpdate = true;
+            }
+            if (Input.City != Address.City) {
+                Address.City = Input.City;
+                shouldUpdate = true;
+            }
+            if (Input.State != Address.State.Code) {
+                Address.State = States.First(s => s.Code == Input.State);
+                shouldUpdate = true;
+            }
+            if (Input.ZipCode != Address.ZipCode) {
+                Address.ZipCode = Input.ZipCode;
+                shouldUpdate = true;
             }
 
-            var userId = await _userManager.GetUserIdAsync(user);
-            var email = await _userManager.GetEmailAsync(user);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code },
-                protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-            StatusMessage = "Verification email sent. Please check your email.";
+            if (shouldUpdate) {
+                if (Address.Id == 0) {
+                    _addressManager.Insert(Address);
+                } else {
+                    _addressManager.Update(Address);
+                }
+                user.Address = Address;
+                await _userManager.UpdateAsync(user);
+                await _signInManager.RefreshSignInAsync(user);
+                StatusMessage = "Your address has been updated";
+            } else {
+                StatusMessage = "No changes to your address were found";
+            }
             return RedirectToPage();
         }
     }

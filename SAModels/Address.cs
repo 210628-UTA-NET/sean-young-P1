@@ -36,5 +36,8 @@ namespace SAModels {
             }
         }
 
+        public override int GetID() {
+            return Id;
+        }
     }
 }

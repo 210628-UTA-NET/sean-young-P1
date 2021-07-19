@@ -15,5 +15,9 @@ namespace SAModels {
         public string Name { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+
+        public override int GetID() {
+            return Id;
+        }
     }
 }

@@ -18,5 +18,9 @@ namespace SAModels {
         public virtual Address Address { get; set; }
 
         public virtual ICollection<LineItem> Items { get; set; }
+
+        public override int GetID() {
+            return Id;
+        }
     }
 }
