@@ -15,13 +15,5 @@ namespace SAModels {
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
-
-        public override int GetID() {
-            int sum = 0;
-            foreach (int i in Code.ToCharArray()) {
-                sum += i;
-            }
-            return sum;
-        }
     }
 }

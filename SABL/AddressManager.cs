@@ -18,12 +18,12 @@ namespace SABL {
             return new Address();
         }
 
-        public int Insert(Address p_address) {
-            return _db.Create(p_address);
+        public void Insert(Address p_address) {
+            _db.Create(p_address);
         }
 
-        public int Update(Address p_address) {
-            return _db.Update(p_address);
+        public void Update(Address p_address) {
+            _db.Update(p_address);
         }
     }
 }

@@ -16,10 +16,9 @@ namespace SADL {
             //_context.ChangeTracker.LazyLoadingEnabled = false;
         }
 
-        public int Create(T p_model) {
+        public void Create(T p_model) {
             _context.Set<T>().Add(p_model);
             _context.SaveChanges();
-            return p_model.GetID();
         }
 
         public void Delete(T p_model) {
@@ -53,7 +52,11 @@ namespace SADL {
             return _context.Set<T>().Find(p_id);
         }
 
-        public int Update(T p_model) {
+        public T FindByID(string p_id) {
+            return _context.Set<T>().Find(p_id);
+        }
+
+        public void Update(T p_model) {
             _context.Set<T>().Attach(p_model);
 
             var entry = _context.Entry(p_model);
@@ -67,7 +70,6 @@ namespace SADL {
 
             _context.SaveChanges();
             entry.State = EntityState.Detached;
-            return p_model.GetID();
         }
     }
 }

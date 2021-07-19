@@ -35,9 +35,5 @@ namespace SAModels {
                 _ZipCode = value;
             }
         }
-
-        public override int GetID() {
-            return Id;
-        }
     }
 }

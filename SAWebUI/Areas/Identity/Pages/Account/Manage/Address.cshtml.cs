@@ -26,12 +26,10 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
             UserManager<CustomerUser> userManager,
             SignInManager<CustomerUser> signInManager,
             IEmailSender emailSender,
-            AddressManager addressManager,
             StateManager stateManager) {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
-            _addressManager = addressManager;
             _stateManager = stateManager;
         }
 
@@ -145,11 +143,13 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
             }
 
             if (shouldUpdate) {
+                /*
                 if (Address.Id == 0) {
                     _addressManager.Insert(Address);
                 } else {
                     _addressManager.Update(Address);
                 }
+                */
                 user.Address = Address;
                 await _userManager.UpdateAsync(user);
                 await _signInManager.RefreshSignInAsync(user);

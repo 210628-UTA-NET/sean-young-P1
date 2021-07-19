@@ -24,9 +24,5 @@ namespace SAModels {
                     _Quantity = value;
             }
         }
-
-        public override int GetID() {
-            return Id;
-        }
     }
 }
