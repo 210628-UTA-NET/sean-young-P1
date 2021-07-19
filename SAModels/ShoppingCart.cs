@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class ShoppingCart {
+    public class ShoppingCart : StoreModel{
         private decimal _TotalAmount;
 
         [Key]

@@ -12,7 +12,6 @@ namespace SADL {
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Country> Countries { get; set; }
         public DbSet<LineItem> LineItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -26,7 +25,6 @@ namespace SADL {
             base.OnModelCreating(p_modelBuilder);
             p_modelBuilder.Entity<Address>();
             p_modelBuilder.Entity<Category>();
-            p_modelBuilder.Entity<Country>();
             p_modelBuilder.Entity<LineItem>();
             p_modelBuilder.Entity<Order>();
             p_modelBuilder.Entity<Product>();

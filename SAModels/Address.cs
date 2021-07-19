@@ -24,9 +24,6 @@ namespace SAModels {
         [Required]
         public virtual State State { get; set; }
 
-        [Required]
-        public virtual Country Country { get; set; }
-
         [MaxLength(10)]
         [RegularExpression(@"^\\d+$")]
         public string ZipCode {

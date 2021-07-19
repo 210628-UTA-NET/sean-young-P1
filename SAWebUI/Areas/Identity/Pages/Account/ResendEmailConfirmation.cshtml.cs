@@ -12,16 +12,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using SAModels;
 
-namespace SAWebUI.Areas.Identity.Pages.Account
-{
+namespace SAWebUI.Areas.Identity.Pages.Account {
     [AllowAnonymous]
-    public class ResendEmailConfirmationModel : PageModel
-    {
+    public class ResendEmailConfirmationModel : PageModel {
         private readonly UserManager<CustomerUser> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ResendEmailConfirmationModel(UserManager<CustomerUser> userManager, IEmailSender emailSender)
-        {
+        public ResendEmailConfirmationModel(UserManager<CustomerUser> userManager, IEmailSender emailSender) {
             _userManager = userManager;
             _emailSender = emailSender;
         }
@@ -29,27 +26,22 @@ namespace SAWebUI.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
+        public class InputModel {
             [Required]
             [EmailAddress]
             public string Email { get; set; }
         }
 
-        public void OnGet()
-        {
+        public void OnGet() {
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
-            {
+            if (user == null) {
                 ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
                 return Page();
             }

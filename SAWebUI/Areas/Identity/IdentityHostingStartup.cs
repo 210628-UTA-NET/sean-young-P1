@@ -7,12 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: HostingStartup(typeof(SAWebUI.Areas.Identity.IdentityHostingStartup))]
-namespace SAWebUI.Areas.Identity
-{
-    public class IdentityHostingStartup : IHostingStartup
-    {
-        public void Configure(IWebHostBuilder builder)
-        {
+namespace SAWebUI.Areas.Identity {
+    public class IdentityHostingStartup : IHostingStartup {
+        public void Configure(IWebHostBuilder builder) {
             builder.ConfigureServices((context, services) => {
             });
         }

@@ -10,31 +10,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using SAModels;
 
-namespace SAWebUI.Areas.Identity.Pages.Account
-{
+namespace SAWebUI.Areas.Identity.Pages.Account {
     [AllowAnonymous]
-    public class ConfirmEmailModel : PageModel
-    {
+    public class ConfirmEmailModel : PageModel {
         private readonly UserManager<CustomerUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<CustomerUser> userManager)
-        {
+        public ConfirmEmailModel(UserManager<CustomerUser> userManager) {
             _userManager = userManager;
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
+        public async Task<IActionResult> OnGetAsync(string userId, string code) {
+            if (userId == null || code == null) {
                 return RedirectToPage("/Index");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 

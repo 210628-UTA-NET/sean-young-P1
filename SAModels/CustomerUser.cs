@@ -32,6 +32,6 @@ namespace SAModels {
             }
         }
 
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
     }
 }

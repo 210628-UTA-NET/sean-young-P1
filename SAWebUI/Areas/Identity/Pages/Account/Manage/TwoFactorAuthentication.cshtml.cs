@@ -8,10 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SAModels;
 
-namespace SAWebUI.Areas.Identity.Pages.Account.Manage
-{
-    public class TwoFactorAuthenticationModel : PageModel
-    {
+namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
+    public class TwoFactorAuthenticationModel : PageModel {
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 
         private readonly UserManager<CustomerUser> _userManager;
@@ -21,8 +19,7 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage
         public TwoFactorAuthenticationModel(
             UserManager<CustomerUser> userManager,
             SignInManager<CustomerUser> signInManager,
-            ILogger<TwoFactorAuthenticationModel> logger)
-        {
+            ILogger<TwoFactorAuthenticationModel> logger) {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -40,11 +37,9 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGet()
-        {
+        public async Task<IActionResult> OnGet() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -56,11 +51,9 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
-        {
+        public async Task<IActionResult> OnPost() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 

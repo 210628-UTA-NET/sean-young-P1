@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Product {
+    public class Product : StoreModel {
         private decimal _Price;
 
         [Key]

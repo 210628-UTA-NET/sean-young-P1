@@ -1,0 +1,55 @@
+﻿@page
+@model AddressModel
+@{
+    ViewData["Title"] = "Manage Address";
+    ViewData["ActivePage"] = ManageNavPages.Address;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="address-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.StreetAddress"></label>
+                <input asp-for="Input.StreetAddress" class="form-control" />
+                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class=" container space-between row" style="padding: 0; margin: 0px">
+                <div class="form-group" style="width: 50%; padding-left: 0">
+                    <label asp-for="Input.State"></label>
+                    <select class="form-select" aria-label="state-select">
+                        @if (Model.Address.State.Code == "00") {
+                            <option selected>Select a state</option>
+                        }
+                        @foreach (var state in Model.States) {
+                            @if (state.Code == "00") continue;
+                            else if (state.Code == Model.Address.State.Code) {
+                                <option selected> @state.Code</option>
+                            } else {
+                                <option> @state.Code</option>
+                                }
+                            }
+                    </select>
+                </div>
+                <div class="form-group" style="width: 50%; padding-right: 0">
+                    <label asp-for="Input.ZipCode"></label>
+                    <input asp-for="Input.ZipCode" class="form-control" />
+                    <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button id="change-address-button" type="submit" asp-page-handler="ChangeAddress" class="btn btn-primary">Save address</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -10,28 +10,36 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using SABL;
 using SAModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
-    public partial class EmailModel : PageModel {
+    public partial class AddressModel : PageModel {
         private readonly UserManager<CustomerUser> _userManager;
         private readonly SignInManager<CustomerUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly AddressManager _addressManager;
+        private readonly StateManager _stateManager;
 
-        public EmailModel(
+        public AddressModel(
             UserManager<CustomerUser> userManager,
             SignInManager<CustomerUser> signInManager,
-            IEmailSender emailSender) {
+            IEmailSender emailSender,
+            AddressManager addressManager,
+            StateManager stateManager) {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _addressManager = addressManager;
+            _stateManager = stateManager;
         }
+
+        public IEnumerable<State> States { get; set; }
 
         public string Username { get; set; }
 
-        public string Email { get; set; }
-
-        public bool IsEmailConfirmed { get; set; }
+        public Address Address { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -40,21 +48,46 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
         public InputModel Input { get; set; }
 
         public class InputModel {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "New email")]
-            public string NewEmail { get; set; }
+
+            [Display(Name = "Street Address")]
+            public string StreetAddress { get; set; }
+
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Display(Name = "State")]
+            public string State { get; set; }
+            //public string Country { get; set; }
+
+            [Display(Name = "Zip Code")]
+            public string ZipCode { get; set; }
+
         }
 
         private async Task LoadAsync(CustomerUser user) {
-            var email = await _userManager.GetEmailAsync(user);
-            Email = email;
 
-            Input = new InputModel {
-                NewEmail = email,
+            var id = await _userManager.GetUserIdAsync(user);
+
+            var addressUser = await _userManager.Users
+                .Include(u => u.Address)
+                .ThenInclude(a => a.State)
+                .SingleAsync(u => u.Id == id);
+
+            Address = addressUser.Address;
+            States = _stateManager.GetAllStates();
+
+            if (Address == null) {
+                Address = new Address() {
+                    State = States.First(s => s.Code == "00")
+                };
+            }
+
+            Input = new InputModel() {
+                StreetAddress = Address.StreetAddress,
+                City = Address.City,
+                State = Address.State.Code,
+                ZipCode = Address.ZipCode,
             };
-
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
         }
 
         public async Task<IActionResult> OnGetAsync() {
@@ -79,6 +112,7 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
             }
 
             var email = await _userManager.GetEmailAsync(user);
+            /*
             if (Input.NewEmail != email) {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
@@ -95,7 +129,7 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
-            }
+            }*/
 
             StatusMessage = "Your email is unchanged.";
             return RedirectToPage();

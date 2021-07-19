@@ -48,6 +48,10 @@ namespace SADL {
             return queryableQuery.Select(o => o).ToList();
         }
 
+        public T FindByID(int p_id) {
+            return _context.Set<T>().Find(p_id);
+        }
+
         public void Update(T p_model) {
             _context.Set<T>().Attach(p_model);
 

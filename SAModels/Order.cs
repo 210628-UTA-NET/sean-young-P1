@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Order {
+    public class Order : StoreModel{
         private decimal _TotalAmount;
 
         [Key]

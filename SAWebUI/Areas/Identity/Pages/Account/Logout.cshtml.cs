@@ -9,34 +9,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SAModels;
 
-namespace SAWebUI.Areas.Identity.Pages.Account
-{
+namespace SAWebUI.Areas.Identity.Pages.Account {
     [AllowAnonymous]
-    public class LogoutModel : PageModel
-    {
+    public class LogoutModel : PageModel {
         private readonly SignInManager<CustomerUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<CustomerUser> signInManager, ILogger<LogoutModel> logger)
-        {
+        public LogoutModel(SignInManager<CustomerUser> signInManager, ILogger<LogoutModel> logger) {
             _signInManager = signInManager;
             _logger = logger;
         }
 
-        public void OnGet()
-        {
+        public void OnGet() {
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
-        {
+        public async Task<IActionResult> OnPost(string returnUrl = null) {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
-            {
+            if (returnUrl != null) {
                 return LocalRedirect(returnUrl);
-            }
-            else
-            {
+            } else {
                 return RedirectToPage();
             }
         }
