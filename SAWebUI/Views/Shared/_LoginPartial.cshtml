@@ -2,25 +2,17 @@
 @inject SignInManager<SAModels.CustomerUser> SignInManager
 @inject UserManager<SAModels.CustomerUser> UserManager
 
-<ul class="navbar-nav">
+<div class="text-end flex-row">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-light">Logout</button>
-        </form>
-    </li>
+    <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+    <form style="display: inline-block; margin-left: 15px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit" class="btn btn-outline-dark">Logout</button>
+    </form>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <a class="btn btn-outline-dark" asp-area="Identity" asp-page="/Account/Login" style="margin-left: 15px">Login</a>
 }
-</ul>
+</div>

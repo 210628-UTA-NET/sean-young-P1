@@ -1,12 +1,11 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
-    <div class="container">
-        <div class="container flex-column" style="padding-left: 0">
-            <h5>Currently Selected Store Location</h5>
-            @if (Context.Request.Cookies["storefrontAddress"] != null) {
-                <h6>@Context.Request.Cookies["storefrontAddress"]</h6>
-            } else {
-                <h6>No store selected</h6>
-            }
-        </div>
-    </div>
-</nav>
+﻿<div class="container flex-column" style="padding-left: 0">
+    <h5>
+        Currently Selected Store Location
+    </h5>
+    @if (Context.Request.Cookies["storefrontAddress"] != null) {
+        <h6>@Context.Request.Cookies["storefrontAddress"]</h6>
+    } else {
+        <h6>No store selected</h6>
+    }
+</div>
+

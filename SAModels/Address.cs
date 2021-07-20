@@ -35,5 +35,19 @@ namespace SAModels {
                 _ZipCode = value;
             }
         }
+
+        public override string ToString() {
+            StringBuilder sb = new();
+            // Hardcoded --> Move to config
+            if (StreetAddress.Length > 50) {
+                sb.AppendFormat(StreetAddress.Substring(0, 50));
+                sb.Append("...");
+            }
+            sb.Append(StreetAddress);
+
+            sb.AppendFormat(", {0}, {1}, {2}", City, State.Code, ZipCode);
+
+            return sb.ToString();
+        }
     }
 }
