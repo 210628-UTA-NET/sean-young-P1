@@ -18,18 +18,14 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
     public partial class AddressModel : PageModel {
         private readonly UserManager<CustomerUser> _userManager;
         private readonly SignInManager<CustomerUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly AddressManager _addressManager;
         private readonly StateManager _stateManager;
 
         public AddressModel(
             UserManager<CustomerUser> userManager,
             SignInManager<CustomerUser> signInManager,
-            IEmailSender emailSender,
             StateManager stateManager) {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _stateManager = stateManager;
         }
 
@@ -143,13 +139,6 @@ namespace SAWebUI.Areas.Identity.Pages.Account.Manage {
             }
 
             if (shouldUpdate) {
-                /*
-                if (Address.Id == 0) {
-                    _addressManager.Insert(Address);
-                } else {
-                    _addressManager.Update(Address);
-                }
-                */
                 user.Address = Address;
                 await _userManager.UpdateAsync(user);
                 await _signInManager.RefreshSignInAsync(user);

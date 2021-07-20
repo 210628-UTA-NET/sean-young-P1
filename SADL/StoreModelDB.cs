@@ -28,24 +28,29 @@ namespace SADL {
 
         }
 
-        public IList<T> Query(IList<Func<T, bool>> p_conditions, IList<string> p_includes) {
-            var enumerableQuery = _context.Set<T>().AsEnumerable();
+        public IList<T> Query(IList<Func<T, bool>> p_conditions = null, IList<string> p_includes = null, int p_page = 0, int p_pageSize = 0) {
+            if (p_page < 0 || p_pageSize < 0) throw new ArgumentException("Cannot have a negative page size or navigate to a negative page.");
 
-            if (p_conditions != null) {
-                foreach (Func<T, bool> cond in p_conditions) {
-                    enumerableQuery = enumerableQuery.Where(cond);
-                }
-            }
-
-            var queryableQuery = enumerableQuery.AsQueryable();
-
+            var queryableQuery = _context.Set<T>().AsQueryable();
             if (p_includes != null) {
                 foreach (string inc in p_includes) {
                     queryableQuery = queryableQuery.Include(inc);
                 }
             }
 
-            return queryableQuery.Select(o => o).ToList();
+            var enumerableQuery = queryableQuery.AsEnumerable();
+            if (p_conditions != null) {
+                foreach (Func<T, bool> cond in p_conditions) {
+                    enumerableQuery = enumerableQuery.Where(cond);
+                }
+            }
+
+            if (p_pageSize != 0 && p_page != 0) { 
+                int skip = (p_page - 1) * p_pageSize;
+                return enumerableQuery.Select(o => o).Skip(skip).Take(p_pageSize).ToList();
+            } else {
+                return enumerableQuery.Select(o => o).ToList();
+            }
         }
 
         public T FindByID(int p_id) {

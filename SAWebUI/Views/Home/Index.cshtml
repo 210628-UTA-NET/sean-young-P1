@@ -1,16 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Search";
 }
-
 <div class="text-center">
     <h1 class="display-4">Welcome to Million Dollar General</h1>
     <div class="container">
         <div class="container flex-column" style="padding-top: 30px">
-            <h3>Find a Store Near You</h3>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="Zipcode or City, State">
-                <label for="floatingInput">Zipcode or City, State</label>
-            </div>
+            <h3 style="text-align: left">Find a Store Near You</h3>
+            <form asp-action="Search" class=" container justify-content-center" style="padding-left: 0">
+                <div class="input-group mb-3" style="width: 50%">
+                    <input asp-for="SearchString" type="text" class="form-control" placeholder="Zipcode or City, State" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <button class="btn btn-outline-primary" type="submit" id="button-search-storefront">Search</button>
+                </div>
+            </form>
         </div>
     </div>
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">

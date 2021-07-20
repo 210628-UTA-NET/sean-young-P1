@@ -52,6 +52,7 @@ namespace SAWebUI {
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.AddressManager>();
             services.AddScoped<SABL.StateManager>();
+            services.AddScoped<SABL.StorefrontManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
