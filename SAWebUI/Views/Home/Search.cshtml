@@ -1,0 +1,34 @@
+﻿@using SAModels
+@model HomeModel
+@{
+    ViewData["Title"] = "Search";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome to Million Dollar General</h1>
+    <div class="container">
+        <div class="container flex-column" style="padding-top: 30px">
+            <h3 style="text-align: left">Find a Store Near You</h3>
+            <form asp-action="Search" class=" container justify-content-center" style="padding-left: 0">
+                <div class="input-group mb-3" style="width: 50%">
+                    <input asp-for="SearchString" type="text" class="form-control" placeholder="Zipcode or City, State" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <button class="btn btn-outline-dark" type="submit" id="button-search-storefront">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if ((IEnumerable<Storefront>)TempData["Storefronts"] != null) {
+    @*if (ViewBag.Storefronts != null) { *@
+        <div class="container"> Test </div>
+    }
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://moranyachts.imgix.net/wp-content/uploads/Luxury-yacht-sales-brokerage-scaled.jpg?auto=format&fit=crop&fm=webp%26nbsp%3B2x&h=400&ixlib=php-3.1.0&w=720&s=d8697af45f516e13c04e4d18813420da" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://www.fraseryachts.com/uploads/image/yachts/ace/Lurssen_yacht_for_sale_Ace_18362.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+

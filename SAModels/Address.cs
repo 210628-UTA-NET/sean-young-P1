@@ -49,5 +49,9 @@ namespace SAModels {
 
             return sb.ToString();
         }
+
+        public string AddressSecond() {
+            return string.Format("{0}, {1}, {2}", City, State.Code, ZipCode);
+        }
     }
 }

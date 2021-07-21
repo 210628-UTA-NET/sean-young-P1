@@ -1,4 +1,5 @@
-﻿@model HomeViewModel
+﻿@using SAModels
+@model HomeModel
 @{
     ViewData["Title"] = "Search";
 }
@@ -15,6 +16,38 @@
             </form>
         </div>
     </div>
+    @if ((IEnumerable<Storefront>)TempData["Storefronts"] != null) {
+        <div class="modal fade" id="storefrontModal" aria-labelledby="exampleModalLabel" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header text-white bg-dark">
+                        <h5 class="modal-title" id="storefront-search-label">Stores Found</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach (var item in ((IEnumerable<Storefront>) TempData["Storefronts"])) {
+                            <a href="@Url.Action("Select", "Home", new { id = item.Id})"  value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location" >
+                                <div class="card-header text-light bg-secondary"> <h5 class="card-title">@item.Name</h5></div>
+                                <div class="card-body">
+                                    <h6 class="card-subtitle text-dark bg-light"> @item.Address.StreetAddress</h6>
+                                    <h6 class="card-subtitle text-dark bg-light"> @item.Address.AddressSecond()</h6>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var myModal = new bootstrap.Modal(document.getElementById('storefrontModal'), {
+                keyboard: false
+            });
+            myModal.show()
+        </script>
+    }
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

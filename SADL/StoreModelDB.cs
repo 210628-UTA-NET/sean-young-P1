@@ -53,12 +53,22 @@ namespace SADL {
             }
         }
 
-        public T FindByID(int p_id) {
-            return _context.Set<T>().Find(p_id);
-        }
+        public T FindSingle(IList<Func<T, bool>> p_conditions = null, IList<string> p_includes = null) {
+            var queryableQuery = _context.Set<T>().AsQueryable();
+            if (p_includes != null) {
+                foreach (string inc in p_includes) {
+                    queryableQuery = queryableQuery.Include(inc);
+                }
+            }
 
-        public T FindByID(string p_id) {
-            return _context.Set<T>().Find(p_id);
+            var enumerableQuery = queryableQuery.AsEnumerable();
+            if (p_conditions != null) {
+                foreach (Func<T, bool> cond in p_conditions) {
+                    enumerableQuery = enumerableQuery.Where(cond);
+                }
+            }
+
+            return enumerableQuery.SingleOrDefault();
         }
 
         public void Update(T p_model) {

@@ -21,8 +21,8 @@ namespace SAWebUI.Controllers {
         }
 
 
-        public IActionResult Index() {
-            return View();
+        public IActionResult Index(HomeModel model) {
+            return View(model);
         }
 
 
@@ -30,17 +30,29 @@ namespace SAWebUI.Controllers {
             CookieOptions options = new();
             options.Expires = DateTime.Now.AddDays(1);
             //Response.Cookies.Append("storefrontAddress", id.ToString(), options);
-            Response.Cookies.Append("storefrontAddress", "Testing", options);
+            Storefront result = _storefrontManager.Get(id);
+
+            if (result == null) return RedirectToAction(nameof(Index));
+            try {
+                Response.Cookies.Append("storefrontID", result.Id.ToString(), options);
+                Response.Cookies.Append("storefrontAddress", result.Address.ToString(), options);
+            } catch (NullReferenceException) {
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult Search(HomeViewModel model, int? page) {
+        public IActionResult Search(HomeModel model, int? page) {
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
 
             int currentPage = page ?? 1;
             IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
-            return RedirectToAction(nameof(Index));
+
+            TempData["Storefronts"] = results;
+            //ViewBag.Storefronts = results;
+            //return RedirectToAction(nameof(Index));
+            return View(nameof(Index));
         }
 
         public IActionResult Privacy() {
