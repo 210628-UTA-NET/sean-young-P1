@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class State : StoreModel {
+    public class State : IStoreModel {
         [Key]
         [Required]
         [MaxLength(2)]

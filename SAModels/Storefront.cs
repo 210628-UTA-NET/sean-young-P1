@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Storefront : StoreModel{
+    public class Storefront : IStoreModel{
         [Key]
         public int Id { get; set; }
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace SAModels {
-    public class CustomerUser : IdentityUser {
+    public class CustomerUser : IdentityUser, IStoreModel {
         private string _FirstName;
         private string _LastName;
 

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class Address : StoreModel {
+    public class Address : IStoreModel {
         private string _ZipCode;
 
         [Key]

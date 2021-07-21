@@ -18,6 +18,7 @@ namespace SAWebUI.Controllers {
 
         [Authorize(Roles = "Manager")]
         public IActionResult Index() {
+
             return View();
         }
 

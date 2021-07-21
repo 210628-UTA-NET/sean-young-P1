@@ -16,7 +16,7 @@
             </form>
         </div>
     </div>
-    @if ((IEnumerable<Storefront>)TempData["Storefronts"] != null) {
+    @if (TempData["Storefronts"] != null) {
         <div class="modal fade" id="storefrontModal" aria-labelledby="exampleModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -25,14 +25,20 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @foreach (var item in ((IEnumerable<Storefront>) TempData["Storefronts"])) {
-                            <a href="@Url.Action("Select", "Home", new { id = item.Id})"  value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location" >
-                                <div class="card-header text-light bg-secondary"> <h5 class="card-title">@item.Name</h5></div>
-                                <div class="card-body">
-                                    <h6 class="card-subtitle text-dark bg-light"> @item.Address.StreetAddress</h6>
-                                    <h6 class="card-subtitle text-dark bg-light"> @item.Address.AddressSecond()</h6>
-                                </div>
-                            </a>
+                        @if(((ICollection<Storefront>)TempData["Storefronts"]).Count > 0) {
+                            @foreach (var item in ((ICollection<Storefront>)TempData["Storefronts"])) {
+                                <a href="@Url.Action("Select", "Home", new { id = item.Id })"  value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location" >
+                                    <div class="card-header text-light bg-secondary"> <h5 class="card-title">@item.Name</h5></div>
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle text-dark bg-light"> @item.Address.StreetAddress</h6>
+                                        <h6 class="card-subtitle text-dark bg-light"> @item.Address.AddressSecond()</h6>
+                                    </div>
+                                </a>
+                            }
+                        } else {
+                            <div class="container">
+                                <h4> No results found </h4>
+                            </div>
                         }
                     </div>
                     <div class="modal-footer">

@@ -9,10 +9,12 @@ namespace SABL {
     public class StorefrontManager {
         private readonly ICRUD<Storefront> _db;
         private readonly IConfiguration _configuration;
+        private readonly SAOptions _pageSizeOptions;
 
         public StorefrontManager(ICRUD<Storefront> p_db, IConfiguration p_configuration) {
             _db = p_db;
-            _configuration = p_configuration;
+            _pageSizeOptions = new SAOptions();
+            p_configuration.GetSection(SAOptions.PageOptions).Bind(_pageSizeOptions);
         }
 
         public Storefront Get(int p_id) {

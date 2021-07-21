@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SADL {
-    public class StoreModelDB<T>: ICRUD<T> where T : SAModels.StoreModel {
+    public class StoreModelDB<T>: ICRUD<T> where T : class, SAModels.IStoreModel{
 
         private readonly SADBContext _context;
 

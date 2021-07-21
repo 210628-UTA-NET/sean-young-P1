@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAModels {
-    public class LineItem : StoreModel{
+    public class LineItem : IStoreModel{
         private int _Quantity;
 
         [Key]

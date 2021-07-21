@@ -45,14 +45,15 @@ namespace SAWebUI.Controllers {
         [HttpPost]
         public IActionResult Search(HomeModel model, int? page) {
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+            try {
+                int currentPage = page ?? 1;
+                IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
 
-            int currentPage = page ?? 1;
-            IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
-
-            TempData["Storefronts"] = results;
-            //ViewBag.Storefronts = results;
-            //return RedirectToAction(nameof(Index));
-            return View(nameof(Index));
+                TempData["Storefronts"] = results;
+                return View(nameof(Index));
+            } catch (Exception) {
+                return View(nameof(Index));
+            }
         }
 
         public IActionResult Privacy() {
