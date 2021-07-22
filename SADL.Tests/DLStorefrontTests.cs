@@ -15,7 +15,7 @@ namespace SADL.Tests {
         public DLStorefrontTests() {
             _options = new DbContextOptionsBuilder<SADBContext>()
                 //.UseLazyLoadingProxies()
-                .UseSqlite("Filename = test.db").Options;
+                .UseSqlite("Filename = storefront_test.db").Options;
             Seed();
         }
 
@@ -88,7 +88,10 @@ namespace SADL.Tests {
 
             conditions.Add(sf => sf.Address.ZipCode == "54321");
 
-            IList<Storefront> results = db.Query(conditions, includes, 1, 20);
+            IList<Storefront> results = db.Query(new(null) {
+                Includes = includes,
+                Conditions = conditions
+            });
 
             Assert.NotNull(results);
             Assert.Single(results);

@@ -9,12 +9,10 @@ namespace SABL {
     public class StorefrontManager {
         private readonly ICRUD<Storefront> _db;
         private readonly IConfiguration _configuration;
-        private readonly SAOptions _pageSizeOptions;
 
         public StorefrontManager(ICRUD<Storefront> p_db, IConfiguration p_configuration) {
             _db = p_db;
-            _pageSizeOptions = new SAOptions();
-            p_configuration.GetSection(SAOptions.PageOptions).Bind(_pageSizeOptions);
+            _configuration = p_configuration;
         }
 
         public Storefront Get(int p_id) {
@@ -24,13 +22,13 @@ namespace SABL {
                 "Address.State"
             };
             conditions.Add(sf => sf.Id == p_id);
-            return _db.FindSingle(conditions, includes);
+            return _db.FindSingle(new(_configuration) {
+                Conditions = conditions,
+                Includes = includes,
+            });
         }
 
         public IList<Storefront> QueryByAddress(string p_address, int p_page) {
-            var pageSizeOptions = new SAOptions();
-            _configuration.GetSection(SAOptions.PageOptions).Bind(pageSizeOptions);
-
             IList<Func<Storefront, bool>> conditions = new List<Func<Storefront, bool>>();
             IList<string> includes = new List<string> {
                 "Address",
@@ -52,7 +50,10 @@ namespace SABL {
                 );
             }
 
-            return _db.Query(conditions, includes, p_page, pageSizeOptions.PageSize);
+            return _db.Query(new(_configuration) { 
+                Conditions = conditions,
+                Includes = includes
+            });
         }
     }
 }

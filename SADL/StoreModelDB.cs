@@ -28,47 +28,44 @@ namespace SADL {
 
         }
 
-        public IList<T> Query(IList<Func<T, bool>> p_conditions = null, IList<string> p_includes = null, int p_page = 0, int p_pageSize = 0) {
-            if (p_page < 0 || p_pageSize < 0) throw new ArgumentException("Cannot have a negative page size or navigate to a negative page.");
+        public IList<T> Query(QueryOptions<T> p_options) {
+            if (p_options.Page < 0 || p_options.PageSize < 0) throw new ArgumentException("Cannot have a negative page size or navigate to a negative page.");
 
+            // Load relations and subrelations
             var queryableQuery = _context.Set<T>().AsQueryable();
-            if (p_includes != null) {
-                foreach (string inc in p_includes) {
+            if (p_options.Includes != null) {
+                foreach (string inc in p_options.Includes) {
                     queryableQuery = queryableQuery.Include(inc);
                 }
             }
 
+            // Add conditions
             var enumerableQuery = queryableQuery.AsEnumerable();
-            if (p_conditions != null) {
-                foreach (Func<T, bool> cond in p_conditions) {
+            if (p_options.Conditions != null) {
+                foreach (Func<T, bool> cond in p_options.Conditions) {
                     enumerableQuery = enumerableQuery.Where(cond);
                 }
             }
 
-            if (p_pageSize != 0 && p_page != 0) { 
-                int skip = (p_page - 1) * p_pageSize;
-                return enumerableQuery.Select(o => o).Skip(skip).Take(p_pageSize).ToList();
-            } else {
-                return enumerableQuery.Select(o => o).ToList();
+            // Paging if applicable
+            if (p_options.Paged) {
+                int skip = (p_options.Page - 1) * p_options.PageSize;
+                enumerableQuery = enumerableQuery.Select(o => o).Skip(skip).Take(p_options.PageSize);
             }
+
+            // Ordering if applicable
+            (OrderBy option, string columnName) = p_options.SortOrder;
+            if (option == OrderBy.Ascending) {
+                enumerableQuery = enumerableQuery.OrderBy(i => typeof(T).GetProperty(columnName).GetValue(i).ToString());
+            } else if (option == OrderBy.Descending) {
+                enumerableQuery = enumerableQuery.OrderByDescending(i => typeof(T).GetProperty(columnName).GetValue(i).ToString());
+            }
+
+            return enumerableQuery.Select(o => o).ToList();
         }
 
-        public T FindSingle(IList<Func<T, bool>> p_conditions = null, IList<string> p_includes = null) {
-            var queryableQuery = _context.Set<T>().AsQueryable();
-            if (p_includes != null) {
-                foreach (string inc in p_includes) {
-                    queryableQuery = queryableQuery.Include(inc);
-                }
-            }
-
-            var enumerableQuery = queryableQuery.AsEnumerable();
-            if (p_conditions != null) {
-                foreach (Func<T, bool> cond in p_conditions) {
-                    enumerableQuery = enumerableQuery.Where(cond);
-                }
-            }
-
-            return enumerableQuery.SingleOrDefault();
+        public T FindSingle(QueryOptions<T> p_options) {
+            return Query(p_options).First();
         }
 
         public void Update(T p_model) {

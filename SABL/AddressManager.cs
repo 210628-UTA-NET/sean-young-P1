@@ -14,7 +14,7 @@ namespace SABL {
             List<Func<Address,bool>> conditions = new();
             List<string> includes = new();
 
-            IList<Address> results =_db.Query(conditions, includes);
+            //IList<Address> results =_db.Query(new(p_configuration) { Conditions =conditions, includes });
             return new Address();
         }
 

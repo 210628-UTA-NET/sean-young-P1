@@ -14,7 +14,7 @@ namespace SADL.Tests {
         public DLProductTests() {
             _options = new DbContextOptionsBuilder<SADBContext>()
                 //.UseLazyLoadingProxies()
-                .UseSqlite("Filename = test.db").Options;
+                .UseSqlite("Filename = product_test.db").Options;
             Seed();
         }
 
