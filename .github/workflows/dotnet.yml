@@ -43,6 +43,6 @@ jobs:
     - name: deploy
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: mildg
+        app-name: milliondollargeneral
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} 
         package: ./publish
