@@ -28,6 +28,8 @@ namespace SAWebUI.Controllers {
 
         public IActionResult Select(int id) {
             CookieOptions options = new();
+            options.HttpOnly = true;
+            options.Secure = true;
             options.Expires = DateTime.Now.AddDays(1);
             Storefront result = _storefrontManager.Get(id);
 

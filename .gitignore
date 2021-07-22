@@ -16,6 +16,8 @@
 **/appsetting.json
 **/JSONDB.json
 .vs/
+.vscode/
+.publish/
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore
 SAWebUI/appsettings.Development.json

@@ -15,24 +15,10 @@ namespace SABL {
             _configuration = p_configuration;
         }
 
-        public LineItem Get(int p_id) {
+        public IList<LineItem> QueryInventory(int storefrontId, string p_searchName, string p_category, int p_page) {
             IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>>();
             IList<string> includes = new List<string> {
-                "Address",
-                "Address.State"
-            };
-            conditions.Add(sf => sf.Id == p_id);
-            return _db.FindSingle(new(_configuration) {
-                Conditions = conditions,
-                Includes = includes,
-            });
-        }
-
-        public IList<LineItem> QueryProducts(int storefrontId, string p_searchName, string p_category, int p_page) {
-            IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>>();
-            IList<string> includes = new List<string> {
-                "Address",
-                "Address.State"
+                "Product",
             };
 
             /*
