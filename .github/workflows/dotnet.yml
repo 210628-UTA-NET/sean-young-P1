@@ -34,12 +34,12 @@ jobs:
         sonarProjectName: sean-young-P1
         sonarOrganization: 210628-uta-net
         dotnetBuildArguments: ""
-        dotnetDisableTests: true
+        #dotnetDisableTests: true
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish
-      run: dotnet publish SAWebUI --configuration Release -o ./publish
+      run: dotnet publish --configuration Release -o ./publish
     - name: deploy
       uses: azure/webapps-deploy@v2
       with: 
