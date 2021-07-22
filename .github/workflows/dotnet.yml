@@ -29,7 +29,7 @@ jobs:
       uses: highbyte/sonarscan-dotnet@v2.1.1-beta
       with:
         # The key of the SonarQube project
-        sonarProjectKey: 210628-uta-net
+        sonarProjectKey: 210628-uta-net_sean-young-P1
         # The name of the SonarQube project
         sonarProjectName: sean-young-P1
         # Optional command arguments to 'dotnet build'
