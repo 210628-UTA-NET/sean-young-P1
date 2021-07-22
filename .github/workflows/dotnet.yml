@@ -32,6 +32,7 @@ jobs:
         sonarProjectKey: 210628-UTA-NET_sean-young-P1
         # The name of the SonarQube project
         sonarProjectName: sean-young-P1
+        sonarOrganization: 210628-uta-net
         # Optional command arguments to 'dotnet build'
         dotnetBuildArguments: --no-restore
         # Optional command arguments to 'dotnet test'
