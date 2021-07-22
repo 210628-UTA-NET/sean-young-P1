@@ -14,15 +14,18 @@ using SABL;
 namespace SAWebUI.Controllers {
     public class InventoryController : Controller {
         private readonly ILogger<InventoryController> _logger;
-        //private readonly CustomerManager _customerManager;
+        private readonly LineItemManager _lineItemManager;
 
-        public InventoryController(ILogger<InventoryController> logger, CustomerManager p_customerManager) {
+        public InventoryController(ILogger<InventoryController> logger, LineItemManager p_lineItemManager) {
             _logger = logger;
-            //_customerManager = p_customerManager;
         }
 
 
-        public IActionResult Index(string query, int? page) {
+        public IActionResult Index() {
+            return View();
+        }
+
+        public IActionResult Search(string query, string orderby, int? page) {
             return View();
         }
 

@@ -6,7 +6,7 @@
     <div class="container">
         <div class="container flex-column" style="padding-top: 30px">
             <h3 style="text-align: left">Search Customers</h3>
-            <form asp-action="Index" class=" container justify-content-center" style="padding-left: 0">
+            <form asp-action="Search" class=" container justify-content-center" style="padding-left: 0">
                 <div class="input-group mb-3" style="width: 50%">
                     <input name="query" type="text" class="form-control" placeholder="Search customers by name" aria-label="search-customers">
                     <button class="btn btn-outline-dark" type="submit" id="button-search-storefront">Search</button>
@@ -15,7 +15,7 @@
         </div>
     </div>
     @if (Model != null) {
-        <table class="table">
+        <table class="table" style="text-align:left">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Id) </th>

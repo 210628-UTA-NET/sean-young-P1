@@ -22,12 +22,17 @@ namespace SAWebUI.Controllers {
         }
 
         [Authorize(Roles = "Manager")]
-        public IActionResult Index(string query, int? page) {
-            if (query == null) return View();
-            page = (page == null) ? 1: page;
+        public IActionResult Index() {
+            return View();
+        }
+
+        [Authorize(Roles = "Manager")]
+        public IActionResult Search(string query, int? page) {
+            if (query == null) return View(nameof(Index));
+            page = (page == null) ? 1 : page;
             //IList<CustomerUser> results = _customerManager.QueryByName(query, (int) page);
             IList<CustomerVM> results = _customerManager.QueryByName(query, (int)page).Select(c => new CustomerVM(c)).ToList();
-            return View(results);
+            return View(nameof(Index), results);
         }
 
 
