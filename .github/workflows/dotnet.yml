@@ -39,7 +39,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish
-      run: dotnet publish --configuration Release -o ./publish
+      run: dotnet publish -o ./publish
     - name: deploy
       uses: azure/webapps-deploy@v2
       with: 
