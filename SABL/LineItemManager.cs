@@ -21,28 +21,12 @@ namespace SABL {
                 "Product",
             };
 
-            /*
-            Address testAddress = new();
+            conditions.Add(sf => sf.Id == storefrontId);
 
-            try {
-                // Check if input string is zipcode
-                testAddress.ZipCode = p_address;
-                conditions.Add(sf => sf.Address.ZipCode == p_address);
-            } catch (FormatException) {
-                // Else check by city or state
-                conditions.Add(sf =>
-                    p_address.Contains(sf.Address.City, StringComparison.OrdinalIgnoreCase) 
-                    || p_address.Contains(sf.Address.State.Code, StringComparison.OrdinalIgnoreCase)
-                    || p_address.Contains(sf.Address.State.Name, StringComparison.OrdinalIgnoreCase)
-                );
-            }
-
-            return _db.Query(new(_configuration) { 
+            return _db.Query(new(_configuration) {
                 Conditions = conditions,
-                Includes = includes
+                Includes = includes,
             });
-            */
-            return null;
         }
     }
 }

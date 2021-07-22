@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SAWebUI.Models;
@@ -18,6 +19,7 @@ namespace SAWebUI.Controllers {
 
         public InventoryController(ILogger<InventoryController> logger, LineItemManager p_lineItemManager) {
             _logger = logger;
+            _lineItemManager = p_lineItemManager;
         }
 
 
@@ -26,6 +28,8 @@ namespace SAWebUI.Controllers {
         }
 
         public IActionResult Search(string query, string orderby, int? page) {
+            int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
+            _lineItemManager.QueryInventory(storefrontId, query, null, 1);
             return View();
         }
 
