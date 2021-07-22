@@ -33,18 +33,13 @@ jobs:
         # The name of the SonarQube project
         sonarProjectName: sean-young-P1
         sonarOrganization: 210628-uta-net
-        # Optional command arguments to 'dotnet build'
-        dotnetBuildArguments: --no-restore
-        # Optional command arguments to 'dotnet test'
-        dotnetTestArguments: --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-        # Optional extra command arguments the the SonarScanner 'begin' command
-        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
-      # authenticating the connection to sonar cloud
+        dotnetBuildArguments: ""
+        dotnetDisableTests: true
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish
-      run: dotnet publish  -o ./publish
+      run: dotnet publish --configuration Release -o ./publish
     - name: deploy
       uses: azure/webapps-deploy@v2
       with: 
