@@ -29,7 +29,6 @@ namespace SAWebUI.Controllers {
         public IActionResult Select(int id) {
             CookieOptions options = new();
             options.Expires = DateTime.Now.AddDays(1);
-            //Response.Cookies.Append("storefrontAddress", id.ToString(), options);
             Storefront result = _storefrontManager.Get(id);
 
             if (result == null) return RedirectToAction(nameof(Index));

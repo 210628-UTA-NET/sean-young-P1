@@ -21,8 +21,11 @@ namespace SABL {
                 "Address.State",
             };
 
-            conditions.Add(sf => (sf.FirstName.Contains(p_searchString) || sf.LastName.Contains(p_searchString)));
-
+            if (p_searchString != null) {
+                conditions.Add(sf => (
+                    sf.FirstName.Contains(p_searchString, StringComparison.OrdinalIgnoreCase) 
+                    || sf.LastName.Contains(p_searchString, StringComparison.OrdinalIgnoreCase)));
+            }
             return _db.Query(new(_configuration){ 
                 Conditions = conditions,
                 Includes = includes,
