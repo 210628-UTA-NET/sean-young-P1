@@ -2,30 +2,46 @@ using Microsoft.Extensions.Configuration;
 using SADL;
 using SAModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SABL {
     public class LineItemManager {
-        private readonly ICRUD<LineItem> _db;
-        //private readonly IConfiguration _configuration;
+        private readonly ICRUD<LineItem> _lineItemDb;
+        private readonly ICRUD<ShoppingCart> _cartDb;
+        private readonly IConfiguration _configuration;
+        private readonly IList<string> _includes;
 
-        public LineItemManager(ICRUD<LineItem> p_db /*, IConfiguration p_configuration*/) {
-            _db = p_db;
-            //_configuration = p_configuration;
+        public LineItemManager(ICRUD<LineItem> p_db, IConfiguration p_configuration) {
+            _lineItemDb = p_db;
+            _configuration = p_configuration;
+            _includes = new List<string>() {
+                "Product",
+                "Product.Categories"
+            };
         }
 
-        public IList<LineItem> QueryInventory(int storefrontId, string p_searchName, string p_category, int p_page) {
-            IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>>();
-            IList<string> includes = new List<string> {
-                "Product",
+        public IList<LineItem> QueryStoreInventory(int p_storefrontId, string p_searchName, string p_category) {
+            IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>> {
+                item => item.StorefrontId == p_storefrontId
             };
 
-            conditions.Add(sf => sf.Id == storefrontId);
+            if (p_category != null) {
+                conditions.Add(item => {
+                    IEnumerable<string> categories = item.Product.Categories.Select(c => c.Name);
+                    return categories.Contains(p_category);
+                });
+            }
 
-            return _db.Query(new(/*_configuration*/) {
+            if (p_searchName != null) {
+                conditions.Add(item =>
+                    item.Product.Name.Contains(p_searchName, StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            return _lineItemDb.Query(new(_configuration) {
                 Conditions = conditions,
-                Includes = includes,
+                Includes = _includes,
             });
         }
     }

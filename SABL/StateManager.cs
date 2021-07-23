@@ -12,7 +12,7 @@ namespace SABL {
         }
 
         public IList<State> GetAllStates() {
-            return _db.Query(new(){});
+            return _db.Query(new(null){});
         }
     }
 }

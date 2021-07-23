@@ -27,10 +27,10 @@ namespace SAWebUI.Controllers {
             return View();
         }
 
-        public IActionResult Search(string query, string orderby, int? page) {
+        public IActionResult Search(string query, string category) {
             int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
-            _lineItemManager.QueryInventory(storefrontId, query, null, 1);
-            return View();
+            IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
+            return View(results);
         }
 
         [Authorize(Roles = "Manager")]

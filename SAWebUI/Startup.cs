@@ -25,7 +25,6 @@ namespace SAWebUI {
         public void ConfigureServices(IServiceCollection services) {
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            /*
             services.AddAuthentication()
                 .AddGoogle(options => {
                     IConfigurationSection googleAuthNSection =
@@ -34,7 +33,7 @@ namespace SAWebUI {
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
-            */
+            
 
             services.AddDefaultIdentity<CustomerUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -49,7 +48,7 @@ namespace SAWebUI {
                  .AddDefaultUI()
                  .AddEntityFrameworkStores<SADL.SADBContext>()
                  .AddDefaultTokenProviders();*/
-            services.AddControllersWithViews(); //.AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.CustomerManager>();

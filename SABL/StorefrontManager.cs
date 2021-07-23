@@ -8,11 +8,11 @@ using System.Collections.Generic;
 namespace SABL {
     public class StorefrontManager {
         private readonly ICRUD<Storefront> _db;
-        //private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        public StorefrontManager(ICRUD<Storefront> p_db /*, IConfiguration p_configuration*/) {
+        public StorefrontManager(ICRUD<Storefront> p_db, IConfiguration p_configuration) {
             _db = p_db;
-            //_configuration = p_configuration;
+            _configuration = p_configuration;
         }
 
         public Storefront Get(int p_id) {
@@ -22,7 +22,7 @@ namespace SABL {
                 "Address.State"
             };
             conditions.Add(sf => sf.Id == p_id);
-            return _db.FindSingle(new(/*_configuration*/) {
+            return _db.FindSingle(new(_configuration) {
                 Conditions = conditions,
                 Includes = includes,
             });
@@ -50,7 +50,7 @@ namespace SABL {
                 );
             }
 
-            return _db.Query(new(/*_configuration*/) { 
+            return _db.Query(new(_configuration) { 
                 Conditions = conditions,
                 Includes = includes
             });

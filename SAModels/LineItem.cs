@@ -24,5 +24,9 @@ namespace SAModels {
                     _Quantity = value;
             }
         }
+
+        public int? OrderId { get; set; }
+        public int? ShoppingCardId { get; set; }
+        public int? StorefrontId { get; set; }
     }
 }
