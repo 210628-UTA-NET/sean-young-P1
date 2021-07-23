@@ -26,7 +26,7 @@ namespace SABL {
                     sf.FirstName.Contains(p_searchString, StringComparison.OrdinalIgnoreCase) 
                     || sf.LastName.Contains(p_searchString, StringComparison.OrdinalIgnoreCase)));
             }
-            return _db.Query(new(_configuration){ 
+            return _db.Query(new(/*_configuration*/){ 
                 Conditions = conditions,
                 Includes = includes,
                 Page = p_page
