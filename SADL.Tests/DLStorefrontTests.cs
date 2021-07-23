@@ -88,7 +88,7 @@ namespace SADL.Tests {
 
             conditions.Add(sf => sf.Address.ZipCode == "54321");
 
-            IList<Storefront> results = db.Query(new(null) {
+            IList<Storefront> results = db.Query(new() {
                 Includes = includes,
                 Conditions = conditions
             });
