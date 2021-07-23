@@ -26,7 +26,7 @@ namespace SAModels {
         }
 
         public int? OrderId { get; set; }
-        public int? ShoppingCardId { get; set; }
+        public int? ShoppingCartId { get; set; }
         public int? StorefrontId { get; set; }
     }
 }

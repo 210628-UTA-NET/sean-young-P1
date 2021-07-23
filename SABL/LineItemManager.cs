@@ -8,12 +8,13 @@ using System.Linq;
 namespace SABL {
     public class LineItemManager {
         private readonly ICRUD<LineItem> _lineItemDb;
-        private readonly ICRUD<ShoppingCart> _cartDb;
+        private readonly ICRUD<Category> _categoryDb;
         private readonly IConfiguration _configuration;
         private readonly IList<string> _includes;
 
-        public LineItemManager(ICRUD<LineItem> p_db, IConfiguration p_configuration) {
-            _lineItemDb = p_db;
+        public LineItemManager(ICRUD<LineItem> p_lineItemDb, ICRUD<Category> p_categoryDb, IConfiguration p_configuration) {
+            _lineItemDb = p_lineItemDb;
+            _categoryDb = p_categoryDb;
             _configuration = p_configuration;
             _includes = new List<string>() {
                 "Product",
@@ -43,6 +44,10 @@ namespace SABL {
                 Conditions = conditions,
                 Includes = _includes,
             });
+        }
+
+        public IList<Category> GetCategories() {
+            return _categoryDb.Query(new(null)).OrderBy(c => c.Name).ToList();
         }
     }
 }

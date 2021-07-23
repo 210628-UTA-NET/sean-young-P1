@@ -24,10 +24,12 @@ namespace SAWebUI.Controllers {
 
 
         public IActionResult Index() {
-            return View();
+            IList<Category> results = _lineItemManager.GetCategories();
+            return View(new InventoryIndexViewModel{ Categories = results});
         }
 
         public IActionResult Search(string query, string category) {
+            if(Request.Cookies["storefrontID"] == null) return RedirectToAction(nameof(Index));
             int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
             IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
             return View(results);
