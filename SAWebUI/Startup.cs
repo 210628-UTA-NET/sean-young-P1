@@ -49,7 +49,7 @@ namespace SAWebUI {
                  .AddDefaultUI()
                  .AddEntityFrameworkStores<SADL.SADBContext>()
                  .AddDefaultTokenProviders();*/
-            services.AddControllersWithViews(); //.AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.CustomerManager>();
