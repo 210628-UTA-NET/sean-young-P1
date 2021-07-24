@@ -33,7 +33,7 @@
                         </table>
 
                         <div class="card-body">
-                            <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#qtyModal"> <i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart </button>
+                            <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#qtyModal" onclick="setQtyModal(@item.Id, '@item.Product.Name')"> <i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart </button>
                             @if (User.IsInRole("Manager")) {
                                 <a href="#" class="btn btn-success m-1"> <i class="bi bi-box-arrow-in-down"></i> Replenish </a>
                             }
@@ -50,18 +50,29 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Quantity to add to cart</h5>
+                        <input type="hidden" id="itemId" name="itemId" value="0">
+                        <h5 class="modal-title" id="qtyTitle">Error</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="input-group justify-content-center align-content-center">
-                        <input class="text-center m-3" maxlength="4" type="number" id="qtyAmnt" min="0" value="1" />
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-primary"><i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
+                    <form>
+                        <div class="form-group m-3 justify-content-center">
+                            <input type="hidden" id="itemId" name="itemId" value="0">
+                            <label for="qtyAmnt">Quantity</label>
+                            <input class="form-control" type="number" id="qtyAmnt" min="0" value="1" style="max-width: 50%" />
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-primary"><i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+        <script>
+            var setQtyModal = (id, name) => {
+                document.getElementById("qtyTitle").innerHTML = "Purchase " + name;
+                document.getElementById("itemId").value = id;
+            }
+        </script>
     </div>
 </div>
