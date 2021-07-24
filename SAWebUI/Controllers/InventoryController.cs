@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 using SAModels;
 using SABL;
@@ -35,29 +36,37 @@ namespace SAWebUI.Controllers {
         }
 
         public IActionResult Search(string query, string category) {
-            if(Request.Cookies["storefrontID"] == null) return RedirectToAction(nameof(Index));
+            if (Request.Cookies["storefrontID"] == null) return RedirectToAction(nameof(Index));
             int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
             IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
-            return View(new InventoryIndexViewModel{ Inventory = results });
+
+            //string errorMsg = (string) TempData["error"];
+            return View(new InventoryViewModel{ Inventory = results });
         }
 
         [Authorize(Roles = "Manager")]
-        public IActionResult Replenish(int id, int quantity) {
-            return View(nameof(Index));
+        public IActionResult Replenish(int itemId, int quantity) {
+            try {
+                _lineItemManager.ReplenishItem(itemId, quantity);
+            } catch (ArgumentException e) {
+                TempData["error"] = e.Message;
+            }
+
+            string returnUrl = Request.Headers["Referer"];
+            if (returnUrl != null) {
+                return Redirect(returnUrl);
+            } else {
+                return RedirectToAction(nameof(Search));
+            }
         }
 
         [Authorize]
-        public async Task<IActionResult> Order(InventoryIndexViewModel model) {
+        public async Task<IActionResult> Order(InventoryViewModel model) {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (model.PreviousURL != null) {
-                return Redirect(model.PreviousURL);
-            } else {
-                return View(nameof(Search));
-            }
+            return View(nameof(Search));
         }
 
 

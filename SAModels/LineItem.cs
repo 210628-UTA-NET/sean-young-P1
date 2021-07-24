@@ -20,7 +20,7 @@ namespace SAModels {
         public int Quantity {
             get { return _Quantity; }
             set {
-                    if (value < 0) throw new ArgumentException("A line item cannot have a negative quantity.");
+                    if (value < 0) throw new ArgumentException("A line item cannot have a negative quantity");
                     _Quantity = value;
             }
         }

@@ -9,5 +9,6 @@ namespace SADL {
         T FindSingle(QueryOptions<T> p_options);
         void Update(T p_model);
         void Delete(T p_model);
+        void Save();
     }
 }

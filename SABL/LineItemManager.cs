@@ -46,6 +46,18 @@ namespace SABL {
             });
         }
 
+        public void ReplenishItem(int p_id, int p_quantity) {
+            IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>> {
+                item => item.Id == p_id
+            };
+            LineItem updateItem = _lineItemDb.FindSingle(new(_configuration){
+                Conditions = conditions
+            });
+
+            updateItem.Quantity += p_quantity;
+            _lineItemDb.Save();
+        }
+
         public IList<Category> GetCategories() {
             return _categoryDb.Query(new(null)).OrderBy(c => c.Name).ToList();
         }

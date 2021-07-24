@@ -83,5 +83,9 @@ namespace SADL {
             _context.SaveChanges();
             entry.State = EntityState.Detached;
         }
+
+        public void Save() {
+            _context.SaveChanges();
+        }
     }
 }

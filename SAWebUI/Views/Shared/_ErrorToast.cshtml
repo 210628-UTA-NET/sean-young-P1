@@ -1,0 +1,20 @@
+﻿@if (TempData["error"] != null) {
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast" style="left: 50%; position: fixed; transform: translate(-50%, -400%); z-index: 9999;">
+        <div class="toast-header bg-danger text-white">
+            <strong class="me-auto">An Error Occurred</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["error"]
+        </div>
+    </div>
+    <script>
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, { delay: 10000})
+        })
+        $(document).ready(function () {
+            $(".toast").toast('show');
+        });
+    </script>
+}

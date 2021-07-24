@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" id="qtyModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qtyTitle">Error</h5>
+            </div>
+            <form action="@Url.Action("AddItem", "Cart")">
+                <div class="form-group m-3 justify-content-center">
+                    <input type="hidden" id="qtyItemId" name="itemId" value="0">
+                    <label for="qtyAmnt">Quantity</label>
+                    <input class="form-control" type="number" name="quantity" id="qtyAmnt" min="0" value="1" style="max-width: 50%" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var setQtyModal = (id, name) => {
+        document.getElementById("qtyTitle").innerHTML = "Purchase " + name;
+        document.getElementById("qtyItemId").value = id;
+    }
+</script>
