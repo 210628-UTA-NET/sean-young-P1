@@ -35,9 +35,13 @@ namespace SAWebUI {
                 });
             
 
-            services.AddDefaultIdentity<CustomerUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SADL.SADBContext>();
+            services.AddDefaultIdentity<CustomerUser>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            }).AddRoles<IdentityRole>()
+             .AddEntityFrameworkStores<SADL.SADBContext>();
             /*
             services.AddAuthorization(options => {
                 options.AddPolicy("Manager",
