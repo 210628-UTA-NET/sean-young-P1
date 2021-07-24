@@ -1,5 +1,5 @@
 @using SAModels
-@model SAWebUI.Models.InventoryIndexViewModel
+@model IList<Category>
 <div class="text-center">
     <div class="container">
         <div class="container flex-column" style="padding-top: 30px">
@@ -11,10 +11,10 @@
                 </div>
             </form>
         </div>
-        <div class="container border">
-            <h4 style="text-align: left">Browse Categories</h4>
+        <div class="container border" style="margin-top: 30px; padding-top: 15px">
+            <h3 style="text-align: left">Browse Categories</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-                @foreach (var category in Model.Categories) {
+                @foreach (var category in Model) {
                     <a href=@Url.Action("Search", "Inventory", new {category = category.Name}) class="btn btn-dark m-3"> @category.Name </a>
                 }
             </div>

@@ -1,0 +1,44 @@
+@using SAModels
+@model InventoryIndexViewModel
+<div class="container">
+    <div class="container flex-column" style="padding-top: 30px">
+        <h3 style="text-align: left">Search Products</h3>
+        <form action="@Url.Action("Search", "Inventory")" class=" container justify-content-center" style="padding-left: 0">
+            <div class="input-group mb-3" style="width: 50%">
+                <input name="query" type="text" class="form-control" placeholder="Enter a product name" aria-label="inventory-search-bar" aria-describedby="inventory-search">
+                <button class="btn btn-outline-dark" type="submit" id="button-search-storefront">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="container border" style="margin-top: 30px; padding: 15px 25px 15px 25px; text-align: left">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+            @foreach (LineItem item in Model.Inventory) {
+                <div class="card" style="width: 22rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Product.Name</h5>
+                        <p class="card-text">@item.Product.Description</p>
+                    </div>
+                    <table style="margin: 15px 15px">
+                        <tbody>
+                            <tr>
+                                <td style="width: 35%"><h6><b>Price</b></h6></td>
+                                <td><h6>@string.Format("${0:N2}", item.Product.Price)</h6></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 35%"><h6><b>Quantity</b></h6></td>
+                                <td><h6>@item.Quantity</h6></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary m-1"> <i class="bi bi-cart3 mx-auto mb-1" style="margin-left: 10px"></i> Add to Cart </a>
+                        @if (User.IsInRole("Manager")) {
+                            <a href="#" class="btn btn-success m-1"> <i class="bi bi-box-arrow-in-down"></i> Replenish </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
