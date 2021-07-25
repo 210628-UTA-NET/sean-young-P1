@@ -35,7 +35,7 @@ namespace SAWebUI.Controllers {
             try {
                 if (Request.Cookies["storefrontID"] == null) {
                     TempData["error"] = "No storefront selected";
-                    return RedirectToAction(nameof(Index));
+                    return Redirect("~/");
                 }
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
@@ -51,9 +51,33 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        [Authorize]
+        public async Task<IActionResult> AddItem(int itemId, int quantity) {
+            try {
+                if (Request.Cookies["storefrontID"] == null) {
+                    TempData["error"] = "No storefront selected";
+                    return Redirect("~/");
+                }
+                int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null) {
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+                _shoppingCartManager.AddItem(itemId, storefrontId, user.Id, quantity);
+            } catch (Exception e) {
+                TempData["error"] = e.Message;
+            }
+
+            string returnUrl = Request.Headers["Referer"];
+            if (returnUrl != null) {
+                return Redirect(returnUrl);
+            } else {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
         [Authorize]
-        public async Task<IActionResult> Order(int itemId ) {
+        public async Task<IActionResult> Order(int itemId) {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

@@ -7,7 +7,7 @@
             <span class="text-primary">Your Cart</span>
         </h4>
         <ul class="list-group mb-3">
-            @if (Model.Items != null) {
+            @if (Model.Items != null && Model.Items.Count > 0) {
                 @foreach (LineItem item in Model.Items) {
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <button type="button" class="btn btn-default" aria-label="Close"><i class="bi bi-trash"></i></button>
