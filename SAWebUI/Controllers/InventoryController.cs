@@ -36,12 +36,23 @@ namespace SAWebUI.Controllers {
         }
 
         public IActionResult Search(string query, string category) {
-            if (Request.Cookies["storefrontID"] == null) return RedirectToAction(nameof(Index));
-            int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
-            IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
-
-            //string errorMsg = (string) TempData["error"];
-            return View(new InventoryViewModel{ Inventory = results });
+            try {
+                if (Request.Cookies["storefrontID"] == null) {
+                    TempData["error"] = "No storefront selected";
+                    return RedirectToAction(nameof(Index));
+                }
+                int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
+                IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
+                return View(new InventoryViewModel { Inventory = results });
+            } catch (Exception e) {
+                TempData["error"] = e.Message;
+                string returnUrl = Request.Headers["Referer"];
+                if (returnUrl != null) {
+                    return Redirect(returnUrl);
+                } else {
+                    return RedirectToAction(nameof(Search));
+                }
+            }
         }
 
         [Authorize(Roles = "Manager")]
@@ -59,16 +70,6 @@ namespace SAWebUI.Controllers {
                 return RedirectToAction(nameof(Search));
             }
         }
-
-        [Authorize]
-        public async Task<IActionResult> Order(InventoryViewModel model) {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-            return View(nameof(Search));
-        }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {

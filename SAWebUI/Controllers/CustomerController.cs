@@ -31,7 +31,7 @@ namespace SAWebUI.Controllers {
             if (query == null) return View(nameof(Index));
             page = (page == null) ? 1 : page;
             //IList<CustomerUser> results = _customerManager.QueryByName(query, (int) page);
-            IList<CustomerVM> results = _customerManager.QueryByName(query, (int)page).Select(c => new CustomerVM(c)).ToList();
+            IList<CustomerViewModel> results = _customerManager.QueryByName(query, (int)page).Select(c => new CustomerViewModel(c)).ToList();
             return View(nameof(Index), results);
         }
 
