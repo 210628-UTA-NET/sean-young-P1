@@ -17,24 +17,33 @@ using SABL;
 namespace SAWebUI.Controllers {
     public class CartController : Controller {
         private readonly ILogger<InventoryController> _logger;
-        //private readonly ShoppingCartManager _shoppingCartManager;
+        private readonly ShoppingCartManager _shoppingCartManager;
         private readonly UserManager<CustomerUser> _userManager;
 
         public CartController(
             ILogger<InventoryController> logger, 
-            LineItemManager p_lineItemManager,
+            ShoppingCartManager p_shoppingCartManager,
             UserManager<CustomerUser> p_userManager) {
             _logger = logger;
-            //_shoppingCartManager = p_shoppingCartManager;
+            _shoppingCartManager = p_shoppingCartManager;
             _userManager = p_userManager;
         }
 
 
         [Authorize]
-        public IActionResult Index() {
+        public async Task<IActionResult> Index() {
             try {
-                if (Request.Cookies["storefrontID"] == null) return Redirect("~/");
-                ShoppingCart userCart = null;
+                if (Request.Cookies["storefrontID"] == null) {
+                    TempData["error"] = "No storefront selected";
+                    return RedirectToAction(nameof(Index));
+                }
+                int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null) {
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+
+                ShoppingCart userCart = _shoppingCartManager.GetCart(user.Id, storefrontId);
                 return View(userCart);
             } catch (Exception e) {
                 TempData["error"] = e.Message;

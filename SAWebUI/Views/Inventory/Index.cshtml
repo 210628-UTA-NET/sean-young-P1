@@ -3,8 +3,8 @@
 @if (Context.Request.Cookies["storefrontID"] != null) {
     <partial name="_IndexInventory" />
 } else {
-<div class="text-center">
-    <h1 class="display-4">Unable to search products</h1>
-    <h3>Select a storefront to proceed</h3>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Unable to search products</h1>
+        <h3>Select a storefront to proceed</h3>
+    </div>
 }

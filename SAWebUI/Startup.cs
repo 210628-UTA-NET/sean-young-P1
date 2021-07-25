@@ -59,6 +59,7 @@ namespace SAWebUI {
             services.AddScoped<SABL.StateManager>();
             services.AddScoped<SABL.StorefrontManager>();
             services.AddScoped<SABL.LineItemManager>();
+            services.AddScoped<SABL.ShoppingCartManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

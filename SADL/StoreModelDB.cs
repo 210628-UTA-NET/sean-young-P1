@@ -65,7 +65,7 @@ namespace SADL {
         }
 
         public T FindSingle(QueryOptions<T> p_options) {
-            return Query(p_options).First();
+            return Query(p_options).FirstOrDefault();
         }
 
         public void Update(T p_model) {
