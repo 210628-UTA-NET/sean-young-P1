@@ -10,7 +10,7 @@
             @if (Model.Items != null && Model.Items.Count > 0) {
                 @foreach (LineItem item in Model.Items) {
                     <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <button type="button" class="btn btn-default" aria-label="Close"><i class="bi bi-trash"></i></button>
+                        <a href="@Url.Action("RemoveItem", "Cart", new { itemId=item.Id } )" type="submit" class="btn btn-default" aria-label="Close"><i class="bi bi-trash"></i></a>
                         <h6 class="my-0">@item.Product.Name</h6>
                         <span class="text">@string.Format("x {0}", item.Quantity)</span>
                         <span class="text-muted">@string.Format("${0:N2}", item.Product.Price)</span>
@@ -27,8 +27,8 @@
             </li>
         </ul>
         <div class=" d-flex justify-content-between">
-            <button class="btn btn-danger m-1"> <i class="bi bi-trash"></i> Clear Cart</button>
-            <button class="btn btn-primary m-1"> <i class="bi bi-cart3 mx-auto mb-1"></i> Complete Purchase</button>
+            <a href="@Url.Action("RemoveAll", "Cart" )" class="btn btn-danger m-1"> <i class="bi bi-trash"></i> Clear Cart</a>
+            <a href="@Url.Action("Order", "Cart" )" class="btn btn-primary m-1"> <i class="bi bi-cart3 mx-auto mb-1"></i> Complete Purchase</a>
         </div>
     </div>
 </div>

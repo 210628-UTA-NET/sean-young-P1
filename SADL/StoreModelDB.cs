@@ -87,5 +87,10 @@ namespace SADL {
         public void Save() {
             _context.SaveChanges();
         }
+
+        public void FlagForRemoval(T p_model) {
+            _context.Set<T>().Attach(p_model);
+            _context.Set<T>().Remove(p_model);
+        }
     }
 }

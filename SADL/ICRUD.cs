@@ -10,5 +10,6 @@ namespace SADL {
         void Update(T p_model);
         void Delete(T p_model);
         void Save();
+        void FlagForRemoval(T p_model);
     }
 }
