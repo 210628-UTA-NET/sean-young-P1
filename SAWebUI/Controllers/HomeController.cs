@@ -27,18 +27,17 @@ namespace SAWebUI.Controllers {
 
 
         public IActionResult Select(int id) {
-            CookieOptions options = new();
-            options.HttpOnly = true;
-            options.Secure = true;
-            options.Expires = DateTime.Now.AddDays(1);
-            Storefront result = _storefrontManager.Get(id);
-
-            if (result == null) return RedirectToAction(nameof(Index));
             try {
+                CookieOptions options = new();
+                options.HttpOnly = true;
+                options.Secure = true;
+                options.Expires = DateTime.Now.AddDays(1);
+                Storefront result = _storefrontManager.Get(id);
+                if (result == null) return RedirectToAction(nameof(Index));
                 Response.Cookies.Append("storefrontID", result.Id.ToString(), options);
                 Response.Cookies.Append("storefrontAddress", result.Address.ToString(), options);
-            } catch (NullReferenceException) {
-                return RedirectToAction(nameof(Index));
+            } catch (Exception) {
+                TempData["error"] = "Invalid Storefront ID";
             }
             return RedirectToAction(nameof(Index));
         }
@@ -51,14 +50,10 @@ namespace SAWebUI.Controllers {
                 IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
 
                 TempData["Storefronts"] = results;
-                return View(nameof(Index));
-            } catch (Exception) {
-                return View(nameof(Index));
+            } catch (Exception e) {
+                TempData["error"] = e.Message;
             }
-        }
-
-        public IActionResult Privacy() {
-            return View();
+            return View(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
