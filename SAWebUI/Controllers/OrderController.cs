@@ -9,11 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-
 using SAModels;
 using SABL;
-using System.Text;
 
 namespace SAWebUI.Controllers {
     public class OrderController : Controller {
@@ -69,7 +66,7 @@ namespace SAWebUI.Controllers {
             try {
                 if (Request.Cookies["storefrontID"] == null) {
                     TempData["error"] = "No storefront selected";
-                    return RedirectToAction(nameof(Index));
+                    return Redirect("~/");
                 }
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 Storefront sf = _storefrontManager.Get(storefrontId);
