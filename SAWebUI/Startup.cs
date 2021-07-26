@@ -42,17 +42,8 @@ namespace SAWebUI {
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             }).AddRoles<IdentityRole>()
              .AddEntityFrameworkStores<SADL.SADBContext>();
-            /*
-            services.AddAuthorization(options => {
-                options.AddPolicy("Manager",
-                     policy => policy.RequireRole("Manager"));
-            });
-            
-            services.AddIdentity<CustomerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddDefaultUI()
-                 .AddEntityFrameworkStores<SADL.SADBContext>()
-                 .AddDefaultTokenProviders();*/
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddControllersWithViews(); //.AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.CustomerManager>();
