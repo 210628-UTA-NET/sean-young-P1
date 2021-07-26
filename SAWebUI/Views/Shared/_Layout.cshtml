@@ -22,6 +22,20 @@
                     </a>
 
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                        @if (User.IsInRole("Manager")) {
+                            <li>
+                                <a href="/Customer" class="nav-link text-white">
+                                    <h1 class="text-center"><i class="bi bi-person-circle mx-auto mb-1" width="24" height="24"></i></h1>
+                                    Customers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Order/Storefront" class="nav-link text-white">
+                                    <h1 class="text-center"><i class="bi bi-shop-window mx-auto mb-1" width="24" height="24"></i></h1>
+                                    Store Orders
+                                </a>
+                            </li>
+                        }
                         <li>
                             <a href="/" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-house-door mx-auto mb-1" width="24" height="24"></i></h1>
@@ -35,7 +49,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
+                            <a href="/Order" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-table mx-auto mb-1" width="24" height="24"></i></h1>
                                 Orders
                             </a>

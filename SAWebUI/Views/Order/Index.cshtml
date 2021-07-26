@@ -1,0 +1,80 @@
+@using SAModels
+@model OrderViewModel
+<partial name="~/Views/Shared/_ErrorToast.cshtml" />
+<div class="container bg-light border p-3">
+    <div class="container align-items-center" style="max-width: 70%">
+        <h4 class="d-flex justify-content-between mb-3">
+            <span class="text-primary">@Model.Title</span>
+        </h4>
+        <div class="container justify-content-end border d-flex mb-4 p-2 ">
+            @if (Model.OrderBy == "date_desc") {
+                <a href="@Url.Action("Index", "Order", new { orderBy="date_asc"})" class="btn btn-dark m-1" id="dateOrderToggle">
+                    <i class="bi bi-caret-down"></i>
+                    Date
+                </a>
+            } else if (Model.OrderBy == "date_asc") {
+                <a href="@Url.Action("Index", "Order", new { orderBy="date_desc"})" class="btn btn-dark m-1" id="dateOrderToggle">
+                    <i class="bi bi-caret-up"></i>
+                    Date
+                </a>
+            } else {
+                <a href="@Url.Action("Index", "Order", new { orderBy="date_desc"})" class="btn btn-dark m-1" id="dateOrderToggle">
+                    Date
+                </a>
+            }
+
+            @if (Model.OrderBy == "cost_desc") {
+                <a href="@Url.Action("Index", "Order", new { orderBy="cost_asc"})" class="btn btn-dark m-1" id="costOrderToggle">
+                    <i class="bi bi-caret-down"></i>
+                    Cost
+                </a>
+            } else if (Model.OrderBy == "cost_asc") {
+                <a href="@Url.Action("Index", "Order", new { orderBy="cost_desc"})" class="btn btn-dark m-1" id="costOrderToggle">
+                    <i class="bi bi-caret-up"></i>
+                    Cost
+                </a>
+            } else {
+                <a href="@Url.Action("Index", "Order", new { orderBy="cost_desc"})" class="btn btn-dark m-1" id="costOrderToggle">
+                    Cost
+                </a>
+            }
+        </div>
+        <div class="accordion" id="orderAccordion">
+            @if (Model.Orders != null && Model.Orders.Count > 0) {
+                @foreach (Order order in Model.Orders) {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id=@order.Id>
+                            <button class="list-group-item d-flex justify-content-between lh-sm bg-dark text-light" type="button" style="width:100%" data-bs-toggle="collapse" data-bs-target=@("#collapse" + order.Id) aria-expanded="false" aria-controls=@("collapse" + order.Id)>
+                                <h6>@string.Format("Order Placed: {0}", order.DatePlaced)</h6>
+                                <h6>@string.Format("Total: ${0:N2}", order.TotalAmount)</h6>
+                            </button>
+                        </h2>
+                        <div id=@("collapse" + order.Id) class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <ul class="list-group mb-3">
+                                    @if (order.LineItems != null && order.LineItems.Count > 0) {
+                                        @foreach (LineItem item in order.LineItems) {
+                                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                                <h6 class="my-0">@item.Product.Name</h6>
+                                                <span class="text">@string.Format("x {0}", item.Quantity)</span>
+                                                <span class="text-muted">@string.Format("${0:N2}", item.Product.Price)</span>
+                                            </li>
+                                        }
+                                    } else {
+                                        <li class="list-group-item d-flex align-items-center justify-content-center lh-sm">
+                                            <h4>No items found</h4>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            } else {
+                <div class="list-group-item d-flex align-items-center justify-content-center lh-sm">
+                    <h4>You have no order history</h4>
+                </div>
+            }
+        </div>
+    </div>
+</div>

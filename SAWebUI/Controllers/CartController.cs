@@ -13,6 +13,7 @@ using System.Web;
 
 using SAModels;
 using SABL;
+using System.Text;
 
 namespace SAWebUI.Controllers {
     public class CartController : Controller {
@@ -64,6 +65,7 @@ namespace SAWebUI.Controllers {
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.AddItem(itemId, storefrontId, user.Id, quantity);
+                TempData["success"] = "Successfully added to your cart";
             } catch (Exception e) {
                 TempData["error"] = e.Message;
             }
@@ -89,6 +91,7 @@ namespace SAWebUI.Controllers {
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.RemoveItem(itemId, user.Id, storefrontId);
+                TempData["success"] = "Successfully removed item from your cart";
             } catch (Exception e) {
                 TempData["error"] = e.Message;
             }
@@ -113,6 +116,7 @@ namespace SAWebUI.Controllers {
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.RemoveAll(user.Id, storefrontId);
+                TempData["success"] = "Your cart is now empty";
             } catch (Exception e) {
                 TempData["error"] = e.Message;
             }
@@ -137,6 +141,7 @@ namespace SAWebUI.Controllers {
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.PlaceOrder(user.Id, storefrontId);
+                TempData["success"] = "Order placed";
             } catch (Exception e) {
                 TempData["error"] = e.Message;
             }

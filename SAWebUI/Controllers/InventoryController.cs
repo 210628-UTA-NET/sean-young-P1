@@ -50,7 +50,7 @@ namespace SAWebUI.Controllers {
                 if (returnUrl != null) {
                     return Redirect(returnUrl);
                 } else {
-                    return RedirectToAction(nameof(Search));
+                    return RedirectToAction(nameof(Index));
                 }
             }
         }

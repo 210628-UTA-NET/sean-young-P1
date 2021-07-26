@@ -171,8 +171,13 @@ namespace SABL {
                 LineItems = userCart.Items,
                 TotalAmount = userCart.TotalAmount,
                 CustomerUserId = p_userId,
-                StorefrontId = p_storefrontId
+                StorefrontId = p_storefrontId,
+                DatePlaced = DateTime.Now
             });
+
+            userCart.TotalAmount = 0.00M;
+            userCart.Items = new List<LineItem>();
+            _orderDb.Save();
         }
     }
 }
