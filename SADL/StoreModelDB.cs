@@ -65,7 +65,7 @@ namespace SADL {
         }
 
         public T FindSingle(QueryOptions<T> p_options) {
-            return Query(p_options).First();
+            return Query(p_options).FirstOrDefault();
         }
 
         public void Update(T p_model) {
@@ -82,6 +82,15 @@ namespace SADL {
 
             _context.SaveChanges();
             entry.State = EntityState.Detached;
+        }
+
+        public void Save() {
+            _context.SaveChanges();
+        }
+
+        public void FlagForRemoval(T p_model) {
+            _context.Set<T>().Attach(p_model);
+            _context.Set<T>().Remove(p_model);
         }
     }
 }

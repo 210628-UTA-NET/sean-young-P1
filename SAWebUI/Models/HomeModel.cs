@@ -11,7 +11,7 @@ namespace SAWebUI.Models {
 
         public IEnumerable<Storefront> Storefronts { get; set;  }
 
-        public bool hasStorefronts() {
+        public bool HasStorefronts() {
             return Storefronts != null; 
         }
 

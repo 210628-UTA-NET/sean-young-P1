@@ -24,6 +24,14 @@ a {
   border-color: #1861ac;
 }
 
+.toast {
+    opacity: 1 !important;
+}
+
+#toast-container > div {
+    opacity: 1 !important;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

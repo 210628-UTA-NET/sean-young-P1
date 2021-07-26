@@ -33,5 +33,8 @@ namespace SAModels {
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DatePlaced { get; set; }
+
+        public string CustomerUserId { get; set; }
+        public int? StorefrontId { get; set; }
     }
 }

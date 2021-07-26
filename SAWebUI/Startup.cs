@@ -25,7 +25,6 @@ namespace SAWebUI {
         public void ConfigureServices(IServiceCollection services) {
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            /*
             services.AddAuthentication()
                 .AddGoogle(options => {
                     IConfigurationSection googleAuthNSection =
@@ -34,27 +33,25 @@ namespace SAWebUI {
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
-            */
-
-            services.AddDefaultIdentity<CustomerUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SADL.SADBContext>();
-            /*
-            services.AddAuthorization(options => {
-                options.AddPolicy("Manager",
-                     policy => policy.RequireRole("Manager"));
-            });
             
-            services.AddIdentity<CustomerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddDefaultUI()
-                 .AddEntityFrameworkStores<SADL.SADBContext>()
-                 .AddDefaultTokenProviders();*/
+
+            services.AddDefaultIdentity<CustomerUser>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            }).AddRoles<IdentityRole>()
+             .AddEntityFrameworkStores<SADL.SADBContext>();
+
             services.AddControllersWithViews(); //.AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.CustomerManager>();
             services.AddScoped<SABL.StateManager>();
             services.AddScoped<SABL.StorefrontManager>();
+            services.AddScoped<SABL.LineItemManager>();
+            services.AddScoped<SABL.ShoppingCartManager>();
+            services.AddScoped<SABL.OrderManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

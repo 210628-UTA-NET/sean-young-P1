@@ -9,8 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+<body class="bg-light">
     <header>
         <div class="px-3 py-2 bg-dark text-white">
             <div class="container">
@@ -21,6 +22,20 @@
                     </a>
 
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                        @if (User.IsInRole("Manager")) {
+                            <li>
+                                <a href="/Customer" class="nav-link text-white">
+                                    <h1 class="text-center"><i class="bi bi-person-circle mx-auto mb-1" width="24" height="24"></i></h1>
+                                    Customers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Order/Storefront" class="nav-link text-white">
+                                    <h1 class="text-center"><i class="bi bi-shop-window mx-auto mb-1" width="24" height="24"></i></h1>
+                                    Store Orders
+                                </a>
+                            </li>
+                        }
                         <li>
                             <a href="/" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-house-door mx-auto mb-1" width="24" height="24"></i></h1>
@@ -34,19 +49,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
+                            <a href="/Order" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-table mx-auto mb-1" width="24" height="24"></i></h1>
                                 Orders
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
+                            <a href="/Inventory" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-grid-3x3-gap mx-auto mb-1" width="24" height="24"></i></h1>
                                 Products
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
+                            <a href="/Cart" class="nav-link text-white">
                                 <h1 class="text-center"><i class="bi bi-cart3 mx-auto mb-1" width="24" height="24"></i></h1>
                                 Your cart
                             </a>
@@ -58,10 +73,10 @@
         <div class="px-3 py-2 border-bottom mb-3">
             <div class="container d-flex flex-wrap justify-content-center">
                 <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-                    <partial name="_StorefrontTab"/>
+                    <partial name="_StorefrontTab" />
                 </form>
 
-                <partial name="_LoginPartial"/>
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </header>
@@ -72,11 +87,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - SAWebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     @await RenderSectionAsync("Scripts", required: false)

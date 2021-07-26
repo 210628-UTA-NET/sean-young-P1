@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" id="repModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="repTitle">Error</h5>
+            </div>
+            <form action="@Url.Action("Replenish", "Inventory" )">
+                <div class="form-group m-3 justify-content-center">
+                    <input type="hidden" id="repItemId" name="itemId" value="0">
+                    <label for="repAmnt">Quantity</label>
+                    <input class="form-control" type="number" name="quantity" id="repAmnt" min="0" value="1" style="max-width: 50%" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-box-arrow-in-down"></i> Replenish</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var setRepModal = (id, name) => {
+        document.getElementById("repTitle").innerHTML = "Replenish " + name;
+        document.getElementById("repItemId").value = id;
+    }
+</script>

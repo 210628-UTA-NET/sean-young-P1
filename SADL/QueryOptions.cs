@@ -24,15 +24,15 @@ namespace SADL {
         public (OrderBy, string) SortOrder { get; set; }
 
 
-        public QueryOptions(/*IConfiguration p_configuration*/) {
-            /*if (p_configuration != null) {
+        public QueryOptions(IConfiguration p_configuration) {
+            if (p_configuration != null) {
                 _pageSizeOptions = new SAOptions();
                 p_configuration.GetSection(SAOptions.PageOptions).Bind(_pageSizeOptions);
                 PageSize = _pageSizeOptions.PageSize;
             } else {
                 Paged = false;
             }
-            */
+            
             Conditions = new List<Func<T, bool>>();
             Includes = new List<string>();
             SortOrder = (OrderBy.None, null);

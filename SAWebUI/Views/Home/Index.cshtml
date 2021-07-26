@@ -3,6 +3,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Million Dollar General</h1>
+    <partial name="~/Views/Shared/_ErrorToast.cshtml" />
     <div class="container">
         <div class="container flex-column" style="padding-top: 30px">
             <h3 style="text-align: left">Find a Store Near You</h3>
@@ -23,9 +24,9 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if(((ICollection<Storefront>)TempData["Storefronts"]).Count > 0) {
+                        @if (((ICollection<Storefront>)TempData["Storefronts"]).Count > 0) {
                             @foreach (var item in ((ICollection<Storefront>)TempData["Storefronts"])) {
-                                <a href="@Url.Action("Select", "Home", new { id = item.Id })"  value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location" >
+                                <a href="@Url.Action("Select", "Home", new { id = item.Id })" value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location">
                                     <div class="card-header text-light bg-secondary"> <h5 class="card-title">@item.Name</h5></div>
                                     <div class="card-body">
                                         <h6 class="card-subtitle text-dark bg-light"> @item.Address.StreetAddress</h6>

@@ -1,0 +1,23 @@
+@using SAModels
+@model IList<Category>
+<div class="text-center">
+    <div class="container">
+        <div class="container flex-column" style="padding-top: 30px">
+            <h3 style="text-align: left">Search Products</h3>
+            <form action="@Url.Action("Search", "Inventory")" class=" container justify-content-center" style="padding-left: 0">
+                <div class="input-group mb-3" style="width: 50%">
+                    <input name="query" type="text" class="form-control" placeholder="Enter a product name" aria-label="inventory-search-bar" aria-describedby="inventory-search">
+                    <button class="btn btn-outline-dark" type="submit" id="button-search-storefront">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="container border" style="margin-top: 30px; padding-top: 15px">
+            <h3 style="text-align: left">Browse Categories</h3>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+                @foreach (var category in Model) {
+                    <a href=@Url.Action("Search", "Inventory", new {category = category.Name}) class="btn btn-dark m-3"> @category.Name </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

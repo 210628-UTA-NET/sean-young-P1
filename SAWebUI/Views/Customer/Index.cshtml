@@ -1,12 +1,12 @@
 ﻿@using SAModels
-@model IEnumerable<CustomerVM>
+@model IEnumerable<CustomerViewModel>
 
 <div class="text-center">
     <h1 class="display-6">Customer Page</h1>
     <div class="container">
         <div class="container flex-column" style="padding-top: 30px">
             <h3 style="text-align: left">Search Customers</h3>
-            <form asp-action="Search" class=" container justify-content-center" style="padding-left: 0">
+            <form asp-action="Index" class=" container justify-content-center" style="padding-left: 0">
                 <div class="input-group mb-3" style="width: 50%">
                     <input name="query" type="text" class="form-control" placeholder="Search customers by name" aria-label="search-customers">
                     <button class="btn btn-outline-dark" type="submit" id="button-search-storefront">Search</button>
@@ -15,32 +15,35 @@
         </div>
     </div>
     @if (Model != null) {
-        <table class="table" style="text-align:left">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Id) </th>
-                    <th>@Html.DisplayNameFor(model => model.Name) </th>
-                    <th>@Html.DisplayNameFor(model => model.Email) </th>
-                    <th>@Html.DisplayNameFor(model => model.Phone) </th>
-                    <th>@Html.DisplayNameFor(model => model.Address) </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+        <div class="container ">
+            <table class="table" style="text-align:left">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Id) </th>
+                        <th>@Html.DisplayNameFor(model => model.Name) </th>
+                        <th>@Html.DisplayNameFor(model => model.Email) </th>
+                        <th>@Html.DisplayNameFor(model => model.Phone) </th>
+                        <th>@Html.DisplayNameFor(model => model.Address) </th>
+                    </tr>
+                </thead>
+                <tbody>
                     @if (Model.Any()) {
                         @foreach (var customer in Model) {
-                            <td>@Html.DisplayFor(modelItem => customer.Id)</td>
-                            <td>@Html.DisplayFor(modelItem => customer.Name)</td>
-                            <td>@Html.DisplayFor(modelItem => customer.Email)</td>
-                            <td>@Html.DisplayFor(modelItem => customer.Phone)</td>
-                            <td>@Html.DisplayFor(modelItem => customer.Address)</td>
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => customer.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => customer.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => customer.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => customer.Phone)</td>
+                                <td>@Html.DisplayFor(modelItem => customer.Address)</td>
+                            </tr>
                         }
                     } else {
-                        <td colspan="100"> No records found </td>
+                        <tr><td colspan="100"> No records found </td></tr>
                     }
-                </tr>
-            </tbody>
-        </table>
+
+                </tbody>
+            </table>
+        </div>
     }
 </div>
 

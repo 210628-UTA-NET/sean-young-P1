@@ -27,7 +27,9 @@ namespace SAModels {
         [Required]
         public virtual CustomerUser CustomerUser { get; set; }
         public virtual Storefront Storefront { get; set; }
-
         public virtual ICollection<LineItem> Items { get; set; }
+
+        public string CustomerUserId { get; set; }
+        public int StorefrontId { get; set; }
     }
 }
