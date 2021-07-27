@@ -36,10 +36,13 @@ namespace SAWebUI.Controllers {
                 if (result == null) return RedirectToAction(nameof(Index));
                 Response.Cookies.Append("storefrontID", result.Id.ToString(), options);
                 Response.Cookies.Append("storefrontAddress", result.Address.ToString(), options);
-            } catch (Exception) {
+                _logger.LogInformation("[HOME:SELECT] User selected storefront ID: {0}, {1}", result.Id, result.Name);
+            } catch (Exception e) {
                 TempData["error"] = "Invalid Storefront ID";
+                _logger.LogError("[HOME:SELECT] Error with Storefront select: id: {0} \n Exception: {1}", id, e.ToString());
             }
             return RedirectToAction(nameof(Index));
+
         }
 
         [HttpPost]
@@ -48,9 +51,10 @@ namespace SAWebUI.Controllers {
             try {
                 int currentPage = page ?? 1;
                 IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
-
                 TempData["Storefronts"] = results;
+                _logger.LogInformation("[HOME:SEARCH] Search: \"{0}\" returned: {1} items", model.SearchString, results.Count);
             } catch (Exception e) {
+                _logger.LogError("[HOME:SEARCH] Error with Storefront Search: \"{0}\"\n{1}", model.SearchString ?? "NULL", e.ToString());
                 TempData["error"] = e.Message;
             }
             return View(nameof(Index));
@@ -58,6 +62,7 @@ namespace SAWebUI.Controllers {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
+            _logger.LogCritical("[HOME] Uncaught error in Home Controller\n{0}", Activity.Current?.Id ?? HttpContext.TraceIdentifier);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

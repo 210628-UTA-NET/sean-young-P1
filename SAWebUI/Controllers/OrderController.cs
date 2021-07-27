@@ -49,7 +49,7 @@ namespace SAWebUI.Controllers {
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 IList<Order> results = _orderManager.QueryById(user.Id);
-
+                _logger.LogInformation("[ORDER:INDEX] Search for order history of Customer ID: {0} returned {1} items", user.Id, results.Count);
                 return View(new OrderViewModel {
                     Title = "Your Orders",
                     Orders = SortOrders(results, orderBy),
@@ -57,6 +57,7 @@ namespace SAWebUI.Controllers {
                 });
             } catch (Exception e) {
                 TempData["error"] = e.Message;
+                _logger.LogError("[ORDER:INDEX] Error searching order history of customer", e.ToString());
                 return Redirect("~/");
             }
         }
@@ -72,7 +73,7 @@ namespace SAWebUI.Controllers {
                 Storefront sf = _storefrontManager.Get(storefrontId);
                 if (sf == null) throw new ArgumentException("Unable to load storefront information");
                 IList<Order> results = _orderManager.QueryById(storefrontId);
-
+                _logger.LogInformation("[ORDER:STOREFRONT] Search for storefront ID: {0} returned {1} items", storefrontId, results.Count);
                 return View(nameof(Index), new OrderViewModel {
                     Title = string.Format("Orders History From {0}", sf.Name),
                     Orders = SortOrders(results, orderBy),
@@ -80,6 +81,7 @@ namespace SAWebUI.Controllers {
                 });
             } catch (Exception e) {
                 TempData["error"] = e.Message;
+                _logger.LogError("[ORDER:STOREFRONT] Error searching order history of storefront: {0}", e.ToString());
                 return Redirect("~/");
             }
 
@@ -88,6 +90,7 @@ namespace SAWebUI.Controllers {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
+            _logger.LogCritical("[ORDER] Uncaught error in Order Controller\n{0}", Activity.Current?.Id ?? HttpContext.TraceIdentifier);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

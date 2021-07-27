@@ -13,7 +13,6 @@ namespace SADL {
 
         public StoreModelDB(SADBContext p_context) {
             _context = p_context;
-            //_context.ChangeTracker.LazyLoadingEnabled = false;
         }
 
         public void Create(T p_model) {

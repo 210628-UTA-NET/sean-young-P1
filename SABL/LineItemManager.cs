@@ -53,6 +53,7 @@ namespace SABL {
             LineItem updateItem = _lineItemDb.FindSingle(new(_configuration){
                 Conditions = conditions
             });
+            if (updateItem == null) throw new ArgumentException("Item with id not found.");
 
             updateItem.Quantity += p_quantity;
             _lineItemDb.Save();

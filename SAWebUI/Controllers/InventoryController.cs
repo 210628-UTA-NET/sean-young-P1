@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 using SAModels;
 using SABL;
@@ -43,9 +42,11 @@ namespace SAWebUI.Controllers {
                 }
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 IList<LineItem> results = _lineItemManager.QueryStoreInventory(storefrontId, query, category);
+                _logger.LogInformation("[INVENTORY:SEARCH] Search: \"{0}\" returned: {1} items", query, results.Count);
                 return View(new InventoryViewModel { Inventory = results });
             } catch (Exception e) {
                 TempData["error"] = e.Message;
+                _logger.LogError("[INVENTORY:SEARCH] Error with Inventory Search: \"{0}\"\n{1}", query ?? "NULL", e.ToString());
                 string returnUrl = Request.Headers["Referer"];
                 if (returnUrl != null) {
                     return Redirect(returnUrl);
@@ -59,8 +60,11 @@ namespace SAWebUI.Controllers {
         public IActionResult Replenish(int itemId, int quantity) {
             try {
                 _lineItemManager.ReplenishItem(itemId, quantity);
+                TempData["success"] = string.Format("Successfully added {0} quantity to item", quantity);
+                _logger.LogInformation("[INVENTORY:REPLENISH] Manager added {0} to item with ID {1}", itemId, quantity);
             } catch (ArgumentException e) {
                 TempData["error"] = e.Message;
+                _logger.LogError("[INVENTORY:REPLENISH] Error adding {0} to item with ID {1} \n{2}", itemId, quantity, e.ToString());
             }
 
             string returnUrl = Request.Headers["Referer"];
@@ -73,6 +77,7 @@ namespace SAWebUI.Controllers {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
+            _logger.LogCritical("[INVENTORY] Uncaught error in Inventory Controller\n{0}", Activity.Current?.Id ?? HttpContext.TraceIdentifier);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

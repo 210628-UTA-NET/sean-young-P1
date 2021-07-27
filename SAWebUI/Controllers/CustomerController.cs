@@ -27,8 +27,11 @@ namespace SAWebUI.Controllers {
                 if (query == null) return View();
                 page = (page == null) ? 1 : page;
                 IList<CustomerViewModel> results = _customerManager.QueryByName(query, (int)page).Select(c => new CustomerViewModel(c)).ToList();
+                _logger.LogInformation("[CUSTOMER:INDEX] Customer search: \"{0}\" returned {1} results", query, results.Count);
                 return View(results);
-            } catch (Exception) {
+            } catch (Exception e) {
+                TempData["error"] = e.Message;
+                _logger.LogError("[CUSTOMER:INDEX] Error searching customers: \"{0}\" \n{1}", query, e.ToString());
                 string returnUrl = Request.Headers["Referer"];
                 if (returnUrl != null) {
                     return Redirect(returnUrl);
@@ -40,6 +43,7 @@ namespace SAWebUI.Controllers {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
+            _logger.LogCritical("[CUSTOMER] Uncaught error in Customer Controller\n{0}", Activity.Current?.Id ?? HttpContext.TraceIdentifier);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

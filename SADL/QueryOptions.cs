@@ -42,8 +42,7 @@ namespace SADL {
             string[] tokens = p_inputString.Split('_'); // LastName_desc
             if (tokens.Length != 2) throw new ArgumentException("Malformed sorting order string.");
 
-            OrderBy o = OrderBy.None;
-            o = tokens[1] switch {
+            OrderBy o = tokens[1] switch {
                 "desc" => OrderBy.Descending,
                 "asc" => OrderBy.Ascending,
                 _ => throw new ArgumentException("Order string must be <COLUMNNAME>_asc, or <COLUMNNAME_desc."),

@@ -116,5 +116,21 @@ namespace SADL.Tests {
             Assert.Equal("A Rock", result.Name);
             Assert.Null(doesNotExist);
         }
+
+        [Fact]
+        public void UpdateProduct() {
+            using var context = new SADBContext(_options);
+            ICRUD<Product> db = new StoreModelDB<Product>(context);
+
+            db.Update(new Product() {
+                Id = 1,
+                Name = "A bigger rock"
+            });
+
+            Product result = context.Products.Find(1);
+
+            Assert.NotNull(result);
+            Assert.Equal("A bigger rock", result.Name);
+        }
     }
 }
