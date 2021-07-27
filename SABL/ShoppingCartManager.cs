@@ -31,7 +31,7 @@ namespace SABL {
             };
         }
 
-        public ShoppingCart GetCart(string p_userId, int p_storefrontId) {
+        public ShoppingCart GetCart(string p_userId, int p_storefrontId, bool p_create=true) {
             IList<Func<ShoppingCart, bool>> conditions = new List<Func<ShoppingCart, bool>> {
                 cart => cart.CustomerUserId == p_userId,
                 cart => cart.StorefrontId == p_storefrontId
@@ -42,8 +42,8 @@ namespace SABL {
                 Includes = _includes
             });
 
-
             if (userCart == null) {
+                if (p_create == false) throw new ArgumentException("No cart with given IDs could be located");
                 _cartDb.Create(new() { 
                     CustomerUserId = p_userId,
                     StorefrontId = p_storefrontId
@@ -96,8 +96,7 @@ namespace SABL {
         }
 
         public void RemoveItem(int p_itemId, string p_userId, int p_storefrontId) {
-            ShoppingCart userCart = GetCart(p_userId, p_storefrontId);
-            if (userCart == null) throw new ArgumentException("No cart with given IDs could be located");
+            ShoppingCart userCart = GetCart(p_userId, p_storefrontId, false);
 
             // Find the item in the cart
             LineItem targetItem = userCart.Items.FirstOrDefault(item => item.Id == p_itemId);
@@ -131,8 +130,7 @@ namespace SABL {
         }
 
         public void RemoveAll(string p_userId, int p_storefrontId) {
-            ShoppingCart userCart = GetCart(p_userId, p_storefrontId);
-            if (userCart == null) throw new ArgumentException("No cart with given IDs could be located");
+            ShoppingCart userCart = GetCart(p_userId, p_storefrontId, false);
             List<LineItem> storefrontItems = new();
 
             // iterate through cart items

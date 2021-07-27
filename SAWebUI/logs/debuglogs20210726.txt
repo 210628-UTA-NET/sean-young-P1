@@ -211,3 +211,266 @@ ORDER BY [o].[Id], [s].[Id], [t].[Id], [t].[Id0]
 2021-07-26 17:28:31.024 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 5.4556ms
 2021-07-26 17:28:31.024 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
 2021-07-26 17:28:31.024 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 9.3945ms
+2021-07-26 17:36:49.114 -07:00 [INF] User profile is available. Using 'C:\Users\syoun\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-07-26 17:36:49.527 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-07-26 17:36:49.527 -07:00 [INF] Hosting environment: Development
+2021-07-26 17:36:49.527 -07:00 [INF] Content root path: D:\Projects D\GitHub\C#\sean-young-P1\SAWebUI
+2021-07-26 17:36:49.558 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 17:36:49.790 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:36:49.830 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 17:36:49.881 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:36:50.014 -07:00 [INF] Executed ViewResult - view Index executed in 148.2835ms.
+2021-07-26 17:36:50.015 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 184.6894ms
+2021-07-26 17:36:50.016 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:36:50.040 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 483.0601ms
+2021-07-26 17:36:52.629 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Inventory - -
+2021-07-26 17:36:52.633 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.InventoryController.Index (SAWebUI)'
+2021-07-26 17:36:52.641 -07:00 [INF] Route matched with {action = "Index", controller = "Inventory", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller SAWebUI.Controllers.InventoryController (SAWebUI).
+2021-07-26 17:36:53.144 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:36:53.905 -07:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+2021-07-26 17:36:53.955 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:36:53.967 -07:00 [INF] Executed ViewResult - view Index executed in 14.8332ms.
+2021-07-26 17:36:53.967 -07:00 [INF] Executed action SAWebUI.Controllers.InventoryController.Index (SAWebUI) in 1326.293ms
+2021-07-26 17:36:53.967 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.InventoryController.Index (SAWebUI)'
+2021-07-26 17:36:53.970 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Inventory - - - 200 - text/html;+charset=utf-8 1340.3334ms
+2021-07-26 17:36:56.110 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Inventory/Search?category=Beverages - -
+2021-07-26 17:36:56.120 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.InventoryController.Search (SAWebUI)'
+2021-07-26 17:36:56.121 -07:00 [INF] Route matched with {action = "Search", controller = "Inventory", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Search(System.String, System.String) on controller SAWebUI.Controllers.InventoryController (SAWebUI).
+2021-07-26 17:36:56.144 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:36:56.329 -07:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Id], [l].[OrderId], [l].[ProductId], [l].[Quantity], [l].[ShoppingCartId], [l].[StorefrontId], [p].[Id], [p].[Description], [p].[Name], [p].[Price], [t].[CategoriesId], [t].[ProductsId], [t].[Id], [t].[Name]
+FROM [LineItems] AS [l]
+LEFT JOIN [Products] AS [p] ON [l].[ProductId] = [p].[Id]
+LEFT JOIN (
+    SELECT [c].[CategoriesId], [c].[ProductsId], [c0].[Id], [c0].[Name]
+    FROM [CategoryProduct] AS [c]
+    INNER JOIN [Categories] AS [c0] ON [c].[CategoriesId] = [c0].[Id]
+) AS [t] ON [p].[Id] = [t].[ProductsId]
+ORDER BY [l].[Id], [p].[Id], [t].[CategoriesId], [t].[ProductsId], [t].[Id]
+2021-07-26 17:36:56.376 -07:00 [INF] [INVENTORY:SEARCH] Search: "null" returned: 1 items
+2021-07-26 17:36:56.378 -07:00 [INF] Executing ViewResult, running view Search.
+2021-07-26 17:36:56.396 -07:00 [INF] Executed ViewResult - view Search executed in 20.2393ms.
+2021-07-26 17:36:56.397 -07:00 [INF] Executed action SAWebUI.Controllers.InventoryController.Search (SAWebUI) in 275.2138ms
+2021-07-26 17:36:56.397 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.InventoryController.Search (SAWebUI)'
+2021-07-26 17:36:56.397 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Inventory/Search?category=Beverages - - - 200 - text/html;+charset=utf-8 286.7124ms
+2021-07-26 17:36:58.199 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Inventory/Replenish?itemId=10&quantity=1 - -
+2021-07-26 17:36:58.206 -07:00 [INF] Authorization was successful.
+2021-07-26 17:36:58.207 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.InventoryController.Replenish (SAWebUI)'
+2021-07-26 17:36:58.207 -07:00 [INF] Route matched with {action = "Replenish", controller = "Inventory", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Replenish(Int32, Int32) on controller SAWebUI.Controllers.InventoryController (SAWebUI).
+2021-07-26 17:36:58.214 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:36:58.260 -07:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Id], [l].[OrderId], [l].[ProductId], [l].[Quantity], [l].[ShoppingCartId], [l].[StorefrontId]
+FROM [LineItems] AS [l]
+2021-07-26 17:36:58.416 -07:00 [INF] Executed DbCommand (54ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [LineItems] SET [Quantity] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+2021-07-26 17:36:58.494 -07:00 [INF] [INVENTORY:REPLENISH] Manager added 10 to item with ID 1
+2021-07-26 17:36:58.494 -07:00 [INF] Executing RedirectResult, redirecting to https://localhost:44337/Inventory/Search?category=Beverages.
+2021-07-26 17:36:58.501 -07:00 [INF] Executed action SAWebUI.Controllers.InventoryController.Replenish (SAWebUI) in 293.2595ms
+2021-07-26 17:36:58.501 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.InventoryController.Replenish (SAWebUI)'
+2021-07-26 17:36:58.506 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Inventory/Search?category=Beverages - -
+2021-07-26 17:36:58.506 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.InventoryController.Search (SAWebUI)'
+2021-07-26 17:36:58.506 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Inventory/Replenish?itemId=10&quantity=1 - - - 302 - - 306.7140ms
+2021-07-26 17:36:58.506 -07:00 [INF] Route matched with {action = "Search", controller = "Inventory", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Search(System.String, System.String) on controller SAWebUI.Controllers.InventoryController (SAWebUI).
+2021-07-26 17:36:58.507 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:36:58.549 -07:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Id], [l].[OrderId], [l].[ProductId], [l].[Quantity], [l].[ShoppingCartId], [l].[StorefrontId], [p].[Id], [p].[Description], [p].[Name], [p].[Price], [t].[CategoriesId], [t].[ProductsId], [t].[Id], [t].[Name]
+FROM [LineItems] AS [l]
+LEFT JOIN [Products] AS [p] ON [l].[ProductId] = [p].[Id]
+LEFT JOIN (
+    SELECT [c].[CategoriesId], [c].[ProductsId], [c0].[Id], [c0].[Name]
+    FROM [CategoryProduct] AS [c]
+    INNER JOIN [Categories] AS [c0] ON [c].[CategoriesId] = [c0].[Id]
+) AS [t] ON [p].[Id] = [t].[ProductsId]
+ORDER BY [l].[Id], [p].[Id], [t].[CategoriesId], [t].[ProductsId], [t].[Id]
+2021-07-26 17:36:58.550 -07:00 [INF] [INVENTORY:SEARCH] Search: "null" returned: 1 items
+2021-07-26 17:36:58.550 -07:00 [INF] Executing ViewResult, running view Search.
+2021-07-26 17:36:58.552 -07:00 [INF] Executed ViewResult - view Search executed in 1.7772ms.
+2021-07-26 17:36:58.552 -07:00 [INF] Executed action SAWebUI.Controllers.InventoryController.Search (SAWebUI) in 45.4027ms
+2021-07-26 17:36:58.552 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.InventoryController.Search (SAWebUI)'
+2021-07-26 17:36:58.552 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Inventory/Search?category=Beverages - - - 200 - text/html;+charset=utf-8 46.5507ms
+2021-07-26 17:37:29.230 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Identity/Account/Manage - -
+2021-07-26 17:37:29.258 -07:00 [INF] Authorization was successful.
+2021-07-26 17:37:29.258 -07:00 [INF] Executing endpoint '/Account/Manage/Index'
+2021-07-26 17:37:29.270 -07:00 [INF] Route matched with {page = "/Account/Manage/Index", area = "Identity", action = "", controller = ""}. Executing page /Account/Manage/Index
+2021-07-26 17:37:29.278 -07:00 [INF] Executing handler method SAWebUI.Areas.Identity.Pages.Account.Manage.IndexModel.OnGetAsync - ModelState is "Valid"
+2021-07-26 17:37:29.280 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:37:29.355 -07:00 [INF] Executed DbCommand (52ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AddressId], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2021-07-26 17:37:29.399 -07:00 [INF] Executed handler method OnGetAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2021-07-26 17:37:29.465 -07:00 [INF] Executed page /Account/Manage/Index in 194.6729ms
+2021-07-26 17:37:29.466 -07:00 [INF] Executed endpoint '/Account/Manage/Index'
+2021-07-26 17:37:29.468 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Identity/Account/Manage - - - 200 - text/html;+charset=utf-8 237.6576ms
+2021-07-26 17:37:30.134 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Order - -
+2021-07-26 17:37:30.135 -07:00 [INF] Authorization was successful.
+2021-07-26 17:37:30.135 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.OrderController.Index (SAWebUI)'
+2021-07-26 17:37:30.138 -07:00 [INF] Route matched with {action = "Index", controller = "Order", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String) on controller SAWebUI.Controllers.OrderController (SAWebUI).
+2021-07-26 17:37:30.140 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:37:30.188 -07:00 [INF] Executed DbCommand (47ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AddressId], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2021-07-26 17:37:30.244 -07:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [o].[Id], [o].[CustomerUserId], [o].[DatePlaced], [o].[StorefrontId], [o].[TotalAmount], [s].[Id], [s].[AddressId], [s].[Name], [t].[Id], [t].[OrderId], [t].[ProductId], [t].[Quantity], [t].[ShoppingCartId], [t].[StorefrontId], [t].[Id0], [t].[Description], [t].[Name], [t].[Price]
+FROM [Orders] AS [o]
+INNER JOIN [Storefronts] AS [s] ON [o].[StorefrontId] = [s].[Id]
+LEFT JOIN (
+    SELECT [l].[Id], [l].[OrderId], [l].[ProductId], [l].[Quantity], [l].[ShoppingCartId], [l].[StorefrontId], [p].[Id] AS [Id0], [p].[Description], [p].[Name], [p].[Price]
+    FROM [LineItems] AS [l]
+    LEFT JOIN [Products] AS [p] ON [l].[ProductId] = [p].[Id]
+) AS [t] ON [o].[Id] = [t].[OrderId]
+ORDER BY [o].[Id], [s].[Id], [t].[Id], [t].[Id0]
+2021-07-26 17:37:30.262 -07:00 [INF] [ORDER:INDEX] Search for order history of Customer ID: de5a23c3-27d9-42c7-9b56-73c981672231 returned 1 items
+2021-07-26 17:37:30.267 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:37:30.276 -07:00 [INF] Executed ViewResult - view Index executed in 11.3488ms.
+2021-07-26 17:37:30.276 -07:00 [INF] Executed action SAWebUI.Controllers.OrderController.Index (SAWebUI) in 137.9537ms
+2021-07-26 17:37:30.276 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.OrderController.Index (SAWebUI)'
+2021-07-26 17:37:30.277 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Order - - - 200 - text/html;+charset=utf-8 142.2684ms
+2021-07-26 17:37:31.567 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Inventory - -
+2021-07-26 17:37:31.567 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.InventoryController.Index (SAWebUI)'
+2021-07-26 17:37:31.567 -07:00 [INF] Route matched with {action = "Index", controller = "Inventory", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller SAWebUI.Controllers.InventoryController (SAWebUI).
+2021-07-26 17:37:31.567 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 17:37:31.608 -07:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+2021-07-26 17:37:31.608 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:37:31.609 -07:00 [INF] Executed ViewResult - view Index executed in 1.293ms.
+2021-07-26 17:37:31.609 -07:00 [INF] Executed action SAWebUI.Controllers.InventoryController.Index (SAWebUI) in 42.4184ms
+2021-07-26 17:37:31.609 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.InventoryController.Index (SAWebUI)'
+2021-07-26 17:37:31.610 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Inventory - - - 200 - text/html;+charset=utf-8 43.2648ms
+2021-07-26 17:37:34.567 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 17:37:34.568 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:37:34.568 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 17:37:34.569 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:37:34.571 -07:00 [INF] Executed ViewResult - view Index executed in 1.5056ms.
+2021-07-26 17:37:34.571 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 3.0477ms
+2021-07-26 17:37:34.571 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:37:34.571 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 4.1582ms
+2021-07-26 17:37:55.313 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Customer - -
+2021-07-26 17:37:55.317 -07:00 [INF] Authorization was successful.
+2021-07-26 17:37:55.317 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.CustomerController.Index (SAWebUI)'
+2021-07-26 17:37:55.318 -07:00 [INF] Route matched with {action = "Index", controller = "Customer", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(System.String, System.Nullable`1[System.Int32]) on controller SAWebUI.Controllers.CustomerController (SAWebUI).
+2021-07-26 17:37:55.334 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:37:55.339 -07:00 [INF] Executed ViewResult - view Index executed in 20.4115ms.
+2021-07-26 17:37:55.339 -07:00 [INF] Executed action SAWebUI.Controllers.CustomerController.Index (SAWebUI) in 21.2709ms
+2021-07-26 17:37:55.339 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.CustomerController.Index (SAWebUI)'
+2021-07-26 17:37:55.340 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Customer - - - 200 - text/html;+charset=utf-8 26.9827ms
+2021-07-26 17:38:07.967 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 17:38:07.968 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:38:07.969 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 17:38:07.969 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 17:38:07.970 -07:00 [INF] Executed ViewResult - view Index executed in 1.1376ms.
+2021-07-26 17:38:07.970 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 1.3359ms
+2021-07-26 17:38:07.970 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 17:38:07.970 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 3.1574ms
+2021-07-26 19:01:58.021 -07:00 [INF] User profile is available. Using 'C:\Users\syoun\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-07-26 19:01:58.758 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-07-26 19:01:58.758 -07:00 [INF] Hosting environment: Development
+2021-07-26 19:01:58.758 -07:00 [INF] Content root path: D:\Projects D\GitHub\C#\sean-young-P1\SAWebUI
+2021-07-26 19:01:58.795 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 19:01:59.785 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 19:02:00.833 -07:00 [INF] Executed DbCommand (122ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AddressId], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2021-07-26 19:02:01.005 -07:00 [INF] Executed DbCommand (44ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2021-07-26 19:02:01.067 -07:00 [INF] Executed DbCommand (40ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2021-07-26 19:02:01.120 -07:00 [INF] Executed DbCommand (42ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2021-07-26 19:02:01.172 -07:00 [INF] Executed DbCommand (39ms) [Parameters=[@__role_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[ClaimType], [a].[ClaimValue]
+FROM [AspNetRoleClaims] AS [a]
+WHERE [a].[RoleId] = @__role_Id_0
+2021-07-26 19:02:01.179 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 19:02:01.215 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 19:02:01.258 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 19:02:01.389 -07:00 [INF] Executed ViewResult - view Index executed in 144.9165ms.
+2021-07-26 19:02:01.390 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 174.9189ms
+2021-07-26 19:02:01.391 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 19:02:01.404 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 2611.1122ms
+2021-07-26 20:10:52.951 -07:00 [INF] User profile is available. Using 'C:\Users\syoun\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-07-26 20:10:53.384 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-07-26 20:10:53.384 -07:00 [INF] Hosting environment: Development
+2021-07-26 20:10:53.384 -07:00 [INF] Content root path: D:\Projects D\GitHub\C#\sean-young-P1\SAWebUI
+2021-07-26 20:10:53.415 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 20:10:54.198 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 20:10:55.295 -07:00 [INF] Executed DbCommand (154ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AddressId], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2021-07-26 20:10:55.505 -07:00 [INF] Executed DbCommand (50ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2021-07-26 20:10:55.589 -07:00 [INF] Executed DbCommand (44ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2021-07-26 20:10:55.656 -07:00 [INF] Executed DbCommand (39ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2021-07-26 20:10:55.741 -07:00 [INF] Executed DbCommand (39ms) [Parameters=[@__role_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[ClaimType], [a].[ClaimValue]
+FROM [AspNetRoleClaims] AS [a]
+WHERE [a].[RoleId] = @__role_Id_0
+2021-07-26 20:10:55.752 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 20:10:55.797 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 20:10:55.844 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 20:10:55.980 -07:00 [INF] Executed ViewResult - view Index executed in 149.8742ms.
+2021-07-26 20:10:55.981 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 183.0274ms
+2021-07-26 20:10:55.982 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 20:10:55.995 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 2581.3219ms
+2021-07-26 20:10:58.627 -07:00 [INF] Request starting HTTP/2 POST https://localhost:44337/Home/Search application/x-www-form-urlencoded 241
+2021-07-26 20:10:58.640 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Search (SAWebUI)'
+2021-07-26 20:10:58.642 -07:00 [INF] Route matched with {action = "Search", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Search(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 20:10:58.791 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 20:10:58.862 -07:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[AddressId], [s].[Name], [a].[Id], [a].[City], [a].[StateCode], [a].[StreetAddress], [a].[ZipCode], [s0].[Code], [s0].[Name]
+FROM [Storefronts] AS [s]
+LEFT JOIN [Addresses] AS [a] ON [s].[AddressId] = [a].[Id]
+LEFT JOIN [States] AS [s0] ON [a].[StateCode] = [s0].[Code]
+2021-07-26 20:10:58.895 -07:00 [INF] [HOME:SEARCH] Search: "ca" returned: 1 items
+2021-07-26 20:10:58.895 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 20:10:58.899 -07:00 [INF] Executed ViewResult - view Index executed in 4.0861ms.
+2021-07-26 20:10:58.899 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Search (SAWebUI) in 257.4215ms
+2021-07-26 20:10:58.900 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Search (SAWebUI)'
+2021-07-26 20:10:58.900 -07:00 [INF] Request finished HTTP/2 POST https://localhost:44337/Home/Search application/x-www-form-urlencoded 241 - 200 - text/html;+charset=utf-8 273.5844ms
+2021-07-26 20:11:00.109 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/Home/Select/1 - -
+2021-07-26 20:11:00.119 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Select (SAWebUI)'
+2021-07-26 20:11:00.120 -07:00 [INF] Route matched with {action = "Select", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Select(Int32) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 20:11:00.126 -07:00 [INF] Entity Framework Core 5.0.8 initialized 'SADBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-07-26 20:11:00.170 -07:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[AddressId], [s].[Name], [a].[Id], [a].[City], [a].[StateCode], [a].[StreetAddress], [a].[ZipCode], [s0].[Code], [s0].[Name]
+FROM [Storefronts] AS [s]
+LEFT JOIN [Addresses] AS [a] ON [s].[AddressId] = [a].[Id]
+LEFT JOIN [States] AS [s0] ON [a].[StateCode] = [s0].[Code]
+2021-07-26 20:11:00.171 -07:00 [INF] [HOME:SELECT] User selected storefront ID: 1, Million Dollar General SF
+2021-07-26 20:11:00.171 -07:00 [INF] Executing RedirectResult, redirecting to /.
+2021-07-26 20:11:00.172 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Select (SAWebUI) in 51.6302ms
+2021-07-26 20:11:00.172 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Select (SAWebUI)'
+2021-07-26 20:11:00.174 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/Home/Select/1 - - - 302 - - 65.1211ms
+2021-07-26 20:11:00.176 -07:00 [INF] Request starting HTTP/2 GET https://localhost:44337/ - -
+2021-07-26 20:11:00.176 -07:00 [INF] Executing endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 20:11:00.176 -07:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index(SAWebUI.Models.HomeModel) on controller SAWebUI.Controllers.HomeController (SAWebUI).
+2021-07-26 20:11:00.176 -07:00 [INF] Executing ViewResult, running view Index.
+2021-07-26 20:11:00.178 -07:00 [INF] Executed ViewResult - view Index executed in 1.2138ms.
+2021-07-26 20:11:00.178 -07:00 [INF] Executed action SAWebUI.Controllers.HomeController.Index (SAWebUI) in 1.4265ms
+2021-07-26 20:11:00.178 -07:00 [INF] Executed endpoint 'SAWebUI.Controllers.HomeController.Index (SAWebUI)'
+2021-07-26 20:11:00.178 -07:00 [INF] Request finished HTTP/2 GET https://localhost:44337/ - - - 200 - text/html;+charset=utf-8 2.4167ms

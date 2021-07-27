@@ -28,7 +28,7 @@ namespace SABL {
             });
         }
 
-        public IList<Storefront> QueryByAddress(string p_address, int p_page) {
+        public IList<Storefront> QueryByAddress(string p_address) {
             IList<Func<Storefront, bool>> conditions = new List<Func<Storefront, bool>>();
             IList<string> includes = new List<string> {
                 "Address",
@@ -44,9 +44,9 @@ namespace SABL {
             } catch (FormatException) {
                 // Else check by city or state
                 conditions.Add(sf =>
-                    p_address.Contains(sf.Address.City, StringComparison.OrdinalIgnoreCase) 
-                    || p_address.Contains(sf.Address.State.Code, StringComparison.OrdinalIgnoreCase)
-                    || p_address.Contains(sf.Address.State.Name, StringComparison.OrdinalIgnoreCase)
+                    sf.Address.City.Contains(p_address, StringComparison.OrdinalIgnoreCase) 
+                    || sf.Address.State.Code.Contains(p_address, StringComparison.OrdinalIgnoreCase)
+                    || sf.Address.State.Name.Contains(p_address, StringComparison.OrdinalIgnoreCase)
                 );
             }
 

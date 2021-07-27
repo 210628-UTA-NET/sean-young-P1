@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using SADL;
 using SAModels;
 using System;
 using System.Collections.Generic;
@@ -23,18 +22,18 @@ namespace SADL.Tests {
             context.Database.EnsureCreated();
 
             context.Products.AddRange(
-                new Product() {
+                new() {
                     Id = 1,
                     Name = "A Rock",
                     Price = 1.23M,
                     Description = "It's a rock..."
                 },
-                new Product() {
+                new() {
                     Name = "Happiness",
                     Price = 9999.99M,
                     Description = "Money can actually buy it."
                 },
-                new Product() {
+                new() {
                     Name = "Potato Salad",
                     Price = 5.25M,
                     Description = "It took three days to make this potato salad.."

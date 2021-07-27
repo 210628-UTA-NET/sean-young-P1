@@ -54,6 +54,7 @@ namespace SABL {
                 Conditions = conditions
             });
             if (updateItem == null) throw new ArgumentException("Item with id not found.");
+            if (updateItem.Quantity + p_quantity < 0) throw new ArgumentException("Cannot have a negative quantity.");
 
             updateItem.Quantity += p_quantity;
             _lineItemDb.Save();

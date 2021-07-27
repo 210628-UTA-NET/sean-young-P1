@@ -46,11 +46,10 @@ namespace SAWebUI.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Search(HomeModel model, int? page) {
+        public IActionResult Search(HomeModel model) {
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
             try {
-                int currentPage = page ?? 1;
-                IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString, currentPage);
+                IList<Storefront> results = _storefrontManager.QueryByAddress(model.SearchString);
                 TempData["Storefronts"] = results;
                 _logger.LogInformation("[HOME:SEARCH] Search: \"{0}\" returned: {1} items", model.SearchString, results.Count);
             } catch (Exception e) {
