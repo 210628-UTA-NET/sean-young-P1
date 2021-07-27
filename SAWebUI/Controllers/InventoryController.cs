@@ -30,8 +30,19 @@ namespace SAWebUI.Controllers {
 
 
         public IActionResult Index() {
-            IList<Category> results = _lineItemManager.GetCategories();
-            return View(results);
+            try {
+                if (Request.Cookies["storefrontID"] != null) {
+                    int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
+                    IList<Category> results = _lineItemManager.GetCategories(storefrontId);
+                    return View(results);
+                } else {
+                    return View();
+                }
+            } catch (Exception e) {
+                TempData["error"] = e.Message;
+                _logger.LogError("[INVENTORY] Error loading Index: {0}", e.ToString());
+                return Redirect("~/");
+            }
         }
 
         public IActionResult Search(string query, string category) {
