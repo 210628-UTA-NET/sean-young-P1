@@ -49,7 +49,7 @@
                                 <h6>@string.Format("Total: ${0:N2}", order.TotalAmount)</h6>
                             </button>
                         </h2>
-                        <div id=@("collapse" + order.Id) class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id=@("collapse" + order.Id) class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul class="list-group mb-3">
                                     @if (order.LineItems != null && order.LineItems.Count > 0) {
