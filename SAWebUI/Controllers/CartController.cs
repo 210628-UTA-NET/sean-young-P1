@@ -11,11 +11,17 @@ using SAModels;
 using SABL;
 
 namespace SAWebUI.Controllers {
+    /// <summary>
+    /// MVC Controller that controls the actions related to the user's cart.
+    /// </summary>
     public class CartController : Controller {
         private readonly ILogger<InventoryController> _logger;
         private readonly ShoppingCartManager _shoppingCartManager;
         private readonly UserManager<CustomerUser> _userManager;
 
+        /// <param name="logger">Logger interface</param>
+        /// <param name="p_shoppingCartManager">BL module that handles the Cart</param>
+        /// <param name="p_userManager">ASP identity module that manages the users</param>
         public CartController(
             ILogger<InventoryController> logger, 
             ShoppingCartManager p_shoppingCartManager,
@@ -25,6 +31,14 @@ namespace SAWebUI.Controllers {
             _userManager = p_userManager;
         }
 
+        /// <summary>
+        /// The index controller. Loads the user and storefront and then 
+        /// attempts to load the user's cart at that storefront and display it.
+        /// </summary>
+        /// <returns>
+        /// A view containing the user's cart contents. Will redirect to home
+        /// in the event of an error.
+        /// </returns>
         [Authorize]
         public async Task<IActionResult> Index() {
             try {
@@ -47,6 +61,13 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Adds the item with the given Id and the given quantity to the user's
+        /// cart.
+        /// </summary>
+        /// <param name="itemId">The Id of the item to add</param>
+        /// <param name="quantity">The quantity of the item to add</param>
+        /// <returns>Redirects back to original URL or home in case of error</returns>
         [Authorize]
         public async Task<IActionResult> AddItem(int itemId, int quantity) {
             try {
@@ -76,6 +97,11 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Removes the item with the given Id from the user's cart.
+        /// </summary>
+        /// <param name="itemId">The Id of the item to remove</param>
+        /// <returns>Redirects back to original URL or home in case of error</returns>
         [Authorize]
         public async Task<IActionResult> RemoveItem(int itemId) {
             try {
@@ -104,6 +130,10 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Removes all items from the user's cart.
+        /// </summary>
+        /// <returns>Redirects back to original URL or home in case of error</returns>
         [Authorize]
         public async Task<IActionResult> RemoveAll() {
             try {
@@ -132,6 +162,10 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Converts the contents of the user's cart into an order.
+        /// </summary>
+        /// <returns>Redirects back to original URL or home in case of error</returns>
         [Authorize]
         public async Task<IActionResult> Order() {
             try {

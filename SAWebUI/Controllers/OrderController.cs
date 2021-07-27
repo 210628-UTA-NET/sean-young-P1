@@ -13,12 +13,19 @@ using SAModels;
 using SABL;
 
 namespace SAWebUI.Controllers {
+    /// <summary>
+    /// MVC Controller that allows the user to query orders.
+    /// </summary>
     public class OrderController : Controller {
         private readonly ILogger<InventoryController> _logger;
         private readonly OrderManager _orderManager;
         private readonly StorefrontManager _storefrontManager;
         private readonly UserManager<CustomerUser> _userManager;
 
+        /// <param name="logger">Logger interface</param>
+        /// <param name="p_orderManager">BL module that handles the order</param>
+        /// <param name="p_userManager">ASP identity module that manages the users</param>
+        /// <param name="p_storefrontManager">BL module that handles the storefronts</param>
         public OrderController(
             ILogger<InventoryController> logger, 
             OrderManager p_orderManager,
@@ -30,6 +37,12 @@ namespace SAWebUI.Controllers {
             _storefrontManager = p_storefrontManager;
         }
 
+        /// <summary>
+        /// Helper function which sorts the order results by the given parameters
+        /// </summary>
+        /// <param name="orders">The list of orders to sort</param>
+        /// <param name="orderBy">The order to sort the list of orders</param>
+        /// <returns></returns>
         private static IList<Order> SortOrders(IList<Order> orders, string orderBy) {
             return orderBy switch {
                 "date_desc" => orders.OrderByDescending(o => o.DatePlaced).ToList(),
@@ -40,7 +53,11 @@ namespace SAWebUI.Controllers {
             };
         }
 
-
+        /// <summary>
+        /// The index controller. Loads the user's orders.
+        /// </summary>
+        /// <param name="orderBy">The order by which to sort the results</param>
+        /// <returns>A view containing with the list of user's orders</returns>
         [Authorize]
         public async Task<IActionResult> Index(string orderBy) {
             try {
@@ -62,6 +79,11 @@ namespace SAWebUI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Loads all orders from the given storefront.
+        /// </summary>
+        /// <param name="orderBy">The order by which to sort the results</param>
+        /// <returns>A view containing with the list of storefront's orders</returns>
         [Authorize(Roles = "Manager")]
         public IActionResult Storefront(string orderBy) {
             try {
@@ -86,7 +108,6 @@ namespace SAWebUI.Controllers {
             }
 
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {

@@ -6,21 +6,33 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-
-using SAModels;
 using SABL;
 
 namespace SAWebUI.Controllers {
+    /// <summary>
+    /// MVC Controller that queries the database of customers.
+    /// </summary>
     public class CustomerController : Controller {
         private readonly ILogger<CustomerController> _logger;
         private readonly CustomerManager _customerManager;
 
+        /// <param name="logger">Logger interface</param>
+        /// <param name="p_customerManager">BL module that manages customer queries</param>
         public CustomerController(ILogger<CustomerController> logger, CustomerManager p_customerManager) {
             _logger = logger;
             _customerManager = p_customerManager;
         }
 
+        /// <summary>
+        /// Index controller. Loads a view from which a manager can query 
+        /// customers by name.
+        /// </summary>
+        /// <param name="query">The search parameter</param>
+        /// <param name="page">The page of results to return (if applicable)</param>
+        /// <returns>
+        /// A view containing the search bar and the results of any customer
+        /// searches.
+        /// </returns>
         [Authorize(Roles = "Manager")]
         public IActionResult Index(string query, int? page) {
             try {

@@ -5,27 +5,41 @@ using SAWebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using SAModels;
 using SABL;
 
 namespace SAWebUI.Controllers {
+    /// <summary>
+    /// MVC Contoller that controls actions related to the Homepage
+    /// </summary>
     public class HomeController : Controller {
         private readonly ILogger<HomeController> _logger;
         private readonly StorefrontManager _storefrontManager;
 
+        /// <param name="logger">Logger interface</param>
+        /// <param name="p_storefrontManager">BL module that queries storefronts</param>
         public HomeController(ILogger<HomeController> logger, StorefrontManager p_storefrontManager) {
             _logger = logger;
             _storefrontManager = p_storefrontManager;
         }
 
-
+        /// <summary>
+        /// The index controller. Loads the homepage from which the user can
+        /// search and select a storefront.
+        /// </summary>
+        /// <param name="model">The input model for the home page</param>
+        /// <returns>The homepage view</returns>
         public IActionResult Index(HomeModel model) {
             return View(model);
         }
 
-
+        /// <summary>
+        /// Controller which attaches a cookie to the user's browser such that
+        /// the user can select a storefront from which they can query items,
+        /// place items, and view orders.
+        /// </summary>
+        /// <param name="id">The Id of the storefront to select</param>
+        /// <returns>Redirects the user back to the index</returns>
         public IActionResult Select(int id) {
             try {
                 CookieOptions options = new();
@@ -45,6 +59,13 @@ namespace SAWebUI.Controllers {
 
         }
 
+        /// <summary>
+        /// Searches for storefronts based on input from the Homepage input model.
+        /// </summary>
+        /// <param name="model">The input model for the home page</param>
+        /// <returns>
+        /// Returns the index view page with a list containing the results of the query
+        /// </returns>
         [HttpPost]
         public IActionResult Search(HomeModel model) {
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
