@@ -57,6 +57,13 @@ namespace SAWebUI {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(Configuration)
+                    .CreateLogger();
+            } else {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+                Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Information()
                     .WriteTo.File(
                         $@"D:\home\LogFiles\Application\{env.ApplicationName}.txt",
@@ -65,13 +72,6 @@ namespace SAWebUI {
                         shared: true,
                         flushToDiskInterval: TimeSpan.FromSeconds(1)
                     ).CreateLogger();
-            } else {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-                Log.Logger = new LoggerConfiguration()
-                    .ReadFrom.Configuration(Configuration)
-                    .CreateLogger();
             }
 
             app.UseHttpsRedirection();
