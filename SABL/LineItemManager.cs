@@ -117,7 +117,7 @@ namespace SABL {
                 }
             });
 
-            return results;
+            return results.OrderBy(c => c.Name).ToList();
         }
     }
 }
