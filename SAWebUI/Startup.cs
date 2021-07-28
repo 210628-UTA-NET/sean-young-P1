@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAModels;
 using Serilog;
+using System;
 
 namespace SAWebUI {
     public class Startup {
@@ -31,10 +32,6 @@ namespace SAWebUI {
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .CreateLogger();
-            
             services.AddDefaultIdentity<CustomerUser>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.SignIn.RequireConfirmedAccount = false;
@@ -59,10 +56,22 @@ namespace SAWebUI {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Information()
+                    .WriteTo.File(
+                        $@"D:\home\LogFiles\Application\{env.ApplicationName}.txt",
+                        fileSizeLimitBytes: 1_000_000,
+                        rollOnFileSizeLimit: true,
+                        shared: true,
+                        flushToDiskInterval: TimeSpan.FromSeconds(1)
+                    ).CreateLogger();
             } else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(Configuration)
+                    .CreateLogger();
             }
 
             app.UseHttpsRedirection();
