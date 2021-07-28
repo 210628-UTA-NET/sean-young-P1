@@ -62,7 +62,7 @@ namespace SABL {
             });
 
             if (userCart == null) {
-                if (p_create == false) throw new ArgumentException("No cart with given IDs could be located");
+                if (!p_create) throw new ArgumentException("No cart with given IDs could be located");
                 _cartDb.Create(new() { 
                     CustomerUserId = p_userId,
                     StorefrontId = p_storefrontId

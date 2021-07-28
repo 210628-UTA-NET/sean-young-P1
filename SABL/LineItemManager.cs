@@ -100,8 +100,6 @@ namespace SABL {
         /// </param>
         /// <returns>A list of all the categories</returns>
         public IList<Category> GetCategories(int p_storefrontId) {
-            //return _categoryDb.Query(new(null)).OrderBy(c => c.Name).ToList();
-
             // Get ids of all products at a storefront
            var productIds = _lineItemDb.Query(new(_configuration) {
                 Includes = _includes,
