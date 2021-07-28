@@ -14,9 +14,11 @@
         @if (Model.Inventory != null && Model.Inventory.Count > 0) {
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
                 @foreach (LineItem item in Model.Inventory) {
-                    <div class="card" style="width: 22rem;">
-                        <div class="card-body">
+                    <div class="card m-2" style="width: 22rem;">
+                        <div class="card-header bg-white">
                             <h5 class="card-title">@item.Product.Name</h5>
+                        </div>
+                        <div class="card-body">
                             <p class="card-text">@item.Product.Description</p>
                         </div>
                         <table style="margin: 15px 15px">
@@ -32,7 +34,7 @@
                             </tbody>
                         </table>
 
-                        <div class="card-body">
+                        <div class="card-footer bg-white">
                             <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#qtyModal" onclick="setQtyModal('@item.Id', '@item.Product.Name')"> <i class="bi bi-cart3 mx-auto mb-1"></i> Add to Cart </button>
                             @if (User.IsInRole("Manager")) {
                                 <button class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#repModal" onclick="setRepModal('@item.Id', '@item.Product.Name')"> <i class="bi bi-box-arrow-in-down"></i> Replenish </button>

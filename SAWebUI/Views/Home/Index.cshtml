@@ -24,21 +24,26 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if (((ICollection<Storefront>)TempData["Storefronts"]).Count > 0) {
-                            @foreach (var item in ((ICollection<Storefront>)TempData["Storefronts"])) {
-                                <a href="@Url.Action("Select", "Home", new { id = item.Id })" value="@item.Id" class="card" style="text-align: left; text-decoration: none;" data-toggle="tooltip" data-placement="left" title="Select location">
-                                    <div class="card-header text-light bg-secondary"> <h5 class="card-title">@item.Name</h5></div>
-                                    <div class="card-body">
-                                        <h6 class="card-subtitle text-dark bg-light"> @item.Address.StreetAddress</h6>
-                                        <h6 class="card-subtitle text-dark bg-light"> @item.Address.AddressSecond()</h6>
-                                    </div>
-                                </a>
+                        <ul class="list-group mb-3">
+                            @if (((ICollection<Storefront>)TempData["Storefronts"]).Count > 0) {
+                                @foreach (var item in ((ICollection<Storefront>)TempData["Storefronts"])) {
+                                    <li class="container list-group-item border-white">
+                                        <a href="@Url.Action("Select", "Home", new { id = item.Id })" value="@item.Id" class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto" style="text-align: left">
+                                                <div class="fw-bold">@item.Name</div>
+                                                <div>@item.Address.StreetAddress</div>
+                                                <div>@item.Address.AddressSecond()</div>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill">@item.Id</span>
+                                        </a>
+                                    </li>
+                                }
+                            } else {
+                                <li class="list-group-item d-flex align-items-center justify-content-center lh-sm">
+                                    <h4>No locations found</h4>
+                                </li>
                             }
-                        } else {
-                            <div class="container">
-                                <h4> No results found </h4>
-                            </div>
-                        }
+                        </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>

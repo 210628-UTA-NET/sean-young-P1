@@ -91,7 +91,7 @@ namespace SADL.Tests {
             IList<Storefront> results = db.Query(new(null) {
                 Includes = includes,
                 Conditions = conditions
-            }); ; ;
+            });
 
             Assert.NotNull(results);
             Assert.Single(results);

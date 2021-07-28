@@ -8,10 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Serilog;
 
 namespace SAWebUI {
     public class Startup {
@@ -33,8 +30,11 @@ namespace SAWebUI {
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
-            
 
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+            
             services.AddDefaultIdentity<CustomerUser>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.SignIn.RequireConfirmedAccount = false;
@@ -43,7 +43,7 @@ namespace SAWebUI {
             }).AddRoles<IdentityRole>()
              .AddEntityFrameworkStores<SADL.SADBContext>();
 
-            services.AddControllersWithViews(); //.AddRazorRuntimeCompilation();
+            services.AddControllersWithViews();//.AddRazorRuntimeCompilation();
             services.AddDbContext<SADL.SADBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
             services.AddScoped(typeof(SADL.ICRUD<>), typeof(SADL.StoreModelDB<>));
             services.AddScoped<SABL.CustomerManager>();
@@ -64,6 +64,7 @@ namespace SAWebUI {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
