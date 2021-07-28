@@ -49,7 +49,7 @@ namespace SAWebUI.Controllers {
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) {
-                    _logger.LogError("[CART:INDEX] Unable to load user with ID: {0}", user.Id);
+                    _logger.LogError("[CART:INDEX] Unable to load user");
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 ShoppingCart userCart = _shoppingCartManager.GetCart(user.Id, storefrontId);
@@ -78,7 +78,7 @@ namespace SAWebUI.Controllers {
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) {
-                    _logger.LogError("[CART:ADDITEM] Unable to load user with ID: {0}", user.Id);
+                    _logger.LogError("[CART:ADDITEM] Unable to load user");
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.AddItem(itemId, storefrontId, user.Id, quantity);
@@ -112,7 +112,7 @@ namespace SAWebUI.Controllers {
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) {
-                    _logger.LogError("[CART:REMOVEITEM] Unable to load user with ID: {0}", user.Id);
+                    _logger.LogError("[CART:REMOVEITEM] Unable to load user");
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.RemoveItem(itemId, user.Id, storefrontId);
@@ -144,7 +144,7 @@ namespace SAWebUI.Controllers {
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) {
-                    _logger.LogError("[CART:REMOVEALL] Unable to load user with ID: {0}", user.Id);
+                    _logger.LogError("[CART:REMOVEALL] Unable to load user");
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.RemoveAll(user.Id, storefrontId);
@@ -176,7 +176,7 @@ namespace SAWebUI.Controllers {
                 int storefrontId = int.Parse(Request.Cookies["storefrontID"]);
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) {
-                    _logger.LogError("[CART:ORDER] Unable to load user with ID: {0}", user.Id);
+                    _logger.LogError("[CART:ORDER] Unable to load user");
                     return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
                 _shoppingCartManager.PlaceOrder(user.Id, storefrontId);
