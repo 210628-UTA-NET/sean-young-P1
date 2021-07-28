@@ -23,7 +23,8 @@ namespace SABL {
             _includes = new List<string>() {
                 "LineItems",
                 "LineItems.Product",
-                "Storefront"
+                "Storefront",
+                "CustomerUser"
             };
         }
 

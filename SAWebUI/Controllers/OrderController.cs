@@ -47,8 +47,8 @@ namespace SAWebUI.Controllers {
             return orderBy switch {
                 "date_desc" => orders.OrderByDescending(o => o.DatePlaced).ToList(),
                 "date_asc" => orders.OrderBy(o => o.DatePlaced).ToList(),
-                "price_desc" => orders.OrderByDescending(o => o.TotalAmount).ToList(),
-                "price_asc" => orders.OrderBy(o => o.TotalAmount).ToList(),
+                "cost_desc" => orders.OrderByDescending(o => o.TotalAmount).ToList(),
+                "cost_asc" => orders.OrderBy(o => o.TotalAmount).ToList(),
                 _ => orders,
             };
         }

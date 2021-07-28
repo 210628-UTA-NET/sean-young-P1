@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SADL.Tests", "SADL.Tests\SA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAWebUI", "SAWebUI\SAWebUI.csproj", "{FD397664-396F-4C16-9BE3-CDE5F2C220D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SABL.Tests", "SABL.Tests\SABL.Tests.csproj", "{ED9947B7-9EFD-417D-A492-315474687B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SABL.Tests", "SABL.Tests\SABL.Tests.csproj", "{ED9947B7-9EFD-417D-A492-315474687B11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAWebUI.Tests", "SAWebUI.Tests\SAWebUI.Tests.csproj", "{9729CFAF-B055-4E40-9D70-C11EC7CE4422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{ED9947B7-9EFD-417D-A492-315474687B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9947B7-9EFD-417D-A492-315474687B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9947B7-9EFD-417D-A492-315474687B11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9729CFAF-B055-4E40-9D70-C11EC7CE4422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9729CFAF-B055-4E40-9D70-C11EC7CE4422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9729CFAF-B055-4E40-9D70-C11EC7CE4422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9729CFAF-B055-4E40-9D70-C11EC7CE4422}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

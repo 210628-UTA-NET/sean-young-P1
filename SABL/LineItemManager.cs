@@ -45,7 +45,7 @@ namespace SABL {
         /// The category of the product(s) to search for
         /// </param>
         /// <returns></returns>
-        public IList<LineItem> QueryStoreInventory(int p_storefrontId, string p_searchName, string p_category) {
+        public virtual IList<LineItem> QueryStoreInventory(int p_storefrontId, string p_searchName, string p_category) {
             IList<Func<LineItem, bool>> conditions = new List<Func<LineItem, bool>> {
                 item => item.StorefrontId == p_storefrontId
             };

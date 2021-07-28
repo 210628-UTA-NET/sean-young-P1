@@ -43,21 +43,22 @@
             @if (Model.Orders != null && Model.Orders.Count > 0) {
                 @foreach (Order order in Model.Orders) {
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id=@order.Id>
-                            <button class="list-group-item d-flex justify-content-between lh-sm bg-dark text-light" type="button" style="width:100%" data-bs-toggle="collapse" data-bs-target=@("#collapse" + order.Id) aria-expanded="false" aria-controls=@("collapse" + order.Id)>
+                        <h2 class="accordion-header" id="@order.Id">
+                            <button class="list-group-item d-flex justify-content-between lh-sm bg-dark text-light" type="button" style="width:100%" data-bs-toggle="collapse" data-bs-target="@("#collapse-" + order.Id.ToString())" aria-expanded="false" aria-controls="@("collapse-" + order.Id.ToString())">
                                 <h6>@string.Format("Order Placed: {0}", order.DatePlaced)</h6>
                                 <h6>@string.Format("Total: ${0:N2}", order.TotalAmount)</h6>
                             </button>
                         </h2>
-                        <div id=@("collapse" + order.Id) class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="@("collapse-" + order.Id.ToString())" class="accordion-collapse collapse"  aria-labelledby="@("heading-"+ order.Id.ToString())" data-bs-parent="#orderAccordion">
                             <div class="accordion-body">
                                 <ul class="list-group mb-3">
                                     @if (order.LineItems != null && order.LineItems.Count > 0) {
                                         @foreach (LineItem item in order.LineItems) {
-                                            <li class="list-group-item d-flex justify-content-between lh-sm">
-                                                <h6 class="my-0">@item.Product.Name</h6>
-                                                <span class="text">@string.Format("x {0}", item.Quantity)</span>
-                                                <span class="text-muted">@string.Format("${0:N2}", item.Product.Price)</span>
+                                            <li class="list-group-item d-flex justify-content-between lh-sm row">
+                                                <h6 class="my-0 col 7">@item.Product.Name</h6>
+
+                                                <span class="text col-1">@string.Format("x {0}", item.Quantity)</span>
+                                                <span class="text-muted col-2" style="text-align: right">@string.Format("${0:N2}", item.Product.Price)</span>
                                             </li>
                                         }
                                     } else {
@@ -66,6 +67,12 @@
                                         </li>
                                     }
                                 </ul>
+                                @if (User.IsInRole("Manager")) {
+                                    <h6>ID: @order.CustomerUserId</h6>
+                                    if (order.CustomerUser != null) {
+                                        <h6>@string.Format("{0}, {1}", order.CustomerUser.LastName, order.CustomerUser.FirstName)</h6>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
