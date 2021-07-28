@@ -47,10 +47,11 @@ namespace SAWebUI.Controllers {
                 options.Secure = true;
                 options.Expires = DateTime.Now.AddDays(1);
                 Storefront result = _storefrontManager.Get(id);
-                if (result == null) return RedirectToAction(nameof(Index));
+                if (result == null) throw new ArgumentException("No storefront exists with that id.");
                 Response.Cookies.Append("storefrontID", result.Id.ToString(), options);
                 Response.Cookies.Append("storefrontAddress", result.Address.ToString(), options);
                 _logger.LogInformation("[HOME:SELECT] User selected storefront ID: {0}, {1}", result.Id, result.Name);
+                TempData["success"] = "Storefront selected";
             } catch (Exception e) {
                 TempData["error"] = "Invalid Storefront ID";
                 _logger.LogError("[HOME:SELECT] Error with Storefront select: id: {0} \n Exception: {1}", id, e.ToString());

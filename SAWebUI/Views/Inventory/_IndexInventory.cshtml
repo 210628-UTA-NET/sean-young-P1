@@ -14,8 +14,14 @@
         <div class="container border" style="margin-top: 30px; padding-top: 15px">
             <h3 style="text-align: left">Browse Categories</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-                @foreach (var category in Model) {
-                    <a href=@Url.Action("Search", "Inventory", new {category = category.Name}) class="btn btn-dark m-3"> @category.Name </a>
+                @if (Model != null && Model.Count > 0) {
+                    @foreach (var category in Model) {
+                        <a href=@Url.Action("Search", "Inventory", new { category = category.Name }) class="btn btn-dark m-3"> @category.Name </a>
+                    }
+                } else {
+                    <div class="container p-2">
+                        <h4>Storefront is empty</h4>
+                    </div>
                 }
             </div>
         </div>

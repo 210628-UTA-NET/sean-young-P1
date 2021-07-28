@@ -62,11 +62,14 @@ namespace SABL {
                 conditions.Add(sf => sf.Address.ZipCode == p_address);
             } catch (FormatException) {
                 // Else check by city or state
-                conditions.Add(sf =>
-                    sf.Address.City.Contains(p_address, StringComparison.OrdinalIgnoreCase) 
-                    || sf.Address.State.Code.Contains(p_address, StringComparison.OrdinalIgnoreCase)
-                    || sf.Address.State.Name.Contains(p_address, StringComparison.OrdinalIgnoreCase)
-                );
+                conditions.Add(sf => {
+                    if (sf.Address == null) return false;
+                    else {
+                        return sf.Address.City.Contains(p_address, StringComparison.OrdinalIgnoreCase)
+                        || sf.Address.State.Code.Contains(p_address, StringComparison.OrdinalIgnoreCase)
+                        || sf.Address.State.Name.Contains(p_address, StringComparison.OrdinalIgnoreCase);
+                    }
+                });
             }
 
             return _db.Query(new(_configuration) { 

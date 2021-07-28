@@ -96,7 +96,7 @@ namespace SAWebUI.Controllers {
                 if (sf == null) throw new ArgumentException("Unable to load storefront information");
                 IList<Order> results = _orderManager.QueryById(storefrontId);
                 _logger.LogInformation("[ORDER:STOREFRONT] Search for storefront ID: {0} returned {1} items", storefrontId, results.Count);
-                return View(nameof(Index), new OrderViewModel {
+                return View(new OrderViewModel {
                     Title = string.Format("Orders History From {0}", sf.Name),
                     Orders = SortOrders(results, orderBy),
                     OrderBy = orderBy
